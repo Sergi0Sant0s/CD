@@ -1,0 +1,101 @@
+button{
+    outline: none;
+}
+
+button:focus{
+    outline: none;
+}
+
+.navbar-button-collapse{
+    border: 1px solid white !important;
+    background-color: rgb(52,58,64);
+    padding: 0 !important;
+    outline: none;
+}
+
+.navbar-button-collapse:hover{
+    border: 1px solid white !important;
+    background-color: white;
+}
+
+.navbar-light .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255,255,255, 1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+    width: 50px;
+    height: 35px;
+}
+
+.navbar-light .navbar-toggler-icon:hover {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(52,58,64, 1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+    
+}
+
+.navbar-brand{
+    color:white !important;
+    border: 0px;
+}
+
+.navbar-button{
+    font-weight: bold;
+    color:white;
+    border: 1px solid white;
+    background-color: rgb(52,58,64);
+    width: 20vh;
+}
+
+.navbar-button:hover{
+    color:rgb(52,58,64);
+    border: 1px solid rgb(52,58,64);
+    background-color: white;
+}
+
+.modal-footer{
+    background-color: rgb(52,58,64);
+}
+
+.modal-footer .navbar-button{
+    height: 55px;
+    border-radius: 5px;
+}
+
+.form-inline{
+    margin-left:auto;
+    text-align:right !important;
+}
+
+#danger-alert{
+    width: 100% !important;
+}
+
+#chat, #ftp{
+    width: 100%;
+}
+
+.nav-item{
+    width: 100%;
+}
+
+.navbar-nav{
+    margin: 0 !important;
+    width: 40%;
+}
+
+@media(max-width: 991px){
+    .form-inline{
+        border-top: 1px solid white;
+        padding-top: 10px;
+    }
+
+    .navbar-nav{
+        margin: 0 !important;
+        width: 100%;
+    }
+
+    .navbar-nav li{
+        margin-top:5px;
+    }
+}
+@media(min-width: 991px){
+    .nav-item{
+        margin-left: 5px;
+    }
+}
