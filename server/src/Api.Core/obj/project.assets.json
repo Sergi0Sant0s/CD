@@ -5181,11 +5181,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Sergio\\Desktop\\api_cd\\src\\Api.Core\\Api.Core.csproj",
+      "projectUniqueName": "C:\\Users\\Sergio\\Desktop\\git\\CD\\server\\src\\Api.Core\\Api.Core.csproj",
       "projectName": "Api.Core",
-      "projectPath": "C:\\Users\\Sergio\\Desktop\\api_cd\\src\\Api.Core\\Api.Core.csproj",
+      "projectPath": "C:\\Users\\Sergio\\Desktop\\git\\CD\\server\\src\\Api.Core\\Api.Core.csproj",
       "packagesPath": "C:\\Users\\Sergio\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Sergio\\Desktop\\api_cd\\src\\Api.Core\\obj\\",
+      "outputPath": "C:\\Users\\Sergio\\Desktop\\git\\CD\\server\\src\\Api.Core\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -5204,11 +5204,11 @@
       "frameworks": {
         "netcoreapp3.1": {
           "projectReferences": {
-            "C:\\Users\\Sergio\\Desktop\\api_cd\\src\\Api.Data\\Api.Data.csproj": {
-              "projectPath": "C:\\Users\\Sergio\\Desktop\\api_cd\\src\\Api.Data\\Api.Data.csproj"
+            "C:\\Users\\Sergio\\Desktop\\git\\CD\\server\\src\\Api.Data\\Api.Data.csproj": {
+              "projectPath": "C:\\Users\\Sergio\\Desktop\\git\\CD\\server\\src\\Api.Data\\Api.Data.csproj"
             },
-            "C:\\Users\\Sergio\\Desktop\\api_cd\\src\\Api.Model\\Api.Model.csproj": {
-              "projectPath": "C:\\Users\\Sergio\\Desktop\\api_cd\\src\\Api.Model\\Api.Model.csproj"
+            "C:\\Users\\Sergio\\Desktop\\git\\CD\\server\\src\\Api.Model\\Api.Model.csproj": {
+              "projectPath": "C:\\Users\\Sergio\\Desktop\\git\\CD\\server\\src\\Api.Model\\Api.Model.csproj"
             }
           }
         }

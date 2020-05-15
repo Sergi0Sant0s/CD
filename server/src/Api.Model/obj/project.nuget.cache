@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "zqklrGq5nXaDXTMnZm9aJKfz+Te+onA/Uluts4hB4iJBZoPl7lIHPlXGDjsEt7C5pA6lUCzzg8h2qzrd27F+GA==",
+  "dgSpecHash": "eI1hFT3yrvvyJ2YMzkdQLoTZSF4/9F3WZS42rXlOxl1iCgzAxX0YQL3CJvu9HRDaIO8CmRwPNXY/4vOu68DpBw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Sergio\\Desktop\\api_cd\\src\\Api.Model\\Api.Model.csproj",
+  "projectFilePath": "C:\\Users\\Sergio\\Desktop\\git\\CD\\server\\src\\Api.Model\\Api.Model.csproj",
   "expectedPackageFiles": [
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512",
     "C:\\Users\\Sergio\\.nuget\\packages\\microsoft.identitymodel.jsonwebtokens\\6.5.1\\microsoft.identitymodel.jsonwebtokens.6.5.1.nupkg.sha512",
