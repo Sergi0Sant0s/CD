@@ -1,0 +1,15 @@
+C:\Users\Sergio\Desktop\api_cd\src\Api.Data\bin\Debug\netcoreapp3.1\Api.Data.deps.json
+C:\Users\Sergio\Desktop\api_cd\src\Api.Data\bin\Debug\netcoreapp3.1\Api.Data.runtimeconfig.json
+C:\Users\Sergio\Desktop\api_cd\src\Api.Data\bin\Debug\netcoreapp3.1\Api.Data.runtimeconfig.dev.json
+C:\Users\Sergio\Desktop\api_cd\src\Api.Data\bin\Debug\netcoreapp3.1\Api.Data.dll
+C:\Users\Sergio\Desktop\api_cd\src\Api.Data\bin\Debug\netcoreapp3.1\Api.Data.pdb
+C:\Users\Sergio\Desktop\api_cd\src\Api.Data\bin\Debug\netcoreapp3.1\Api.Model.dll
+C:\Users\Sergio\Desktop\api_cd\src\Api.Data\bin\Debug\netcoreapp3.1\Api.Model.pdb
+C:\Users\Sergio\Desktop\api_cd\src\Api.Data\obj\Debug\netcoreapp3.1\Api.Data.csprojAssemblyReference.cache
+C:\Users\Sergio\Desktop\api_cd\src\Api.Data\obj\Debug\netcoreapp3.1\Api.Data.csproj.CoreCompileInputs.cache
+C:\Users\Sergio\Desktop\api_cd\src\Api.Data\obj\Debug\netcoreapp3.1\Api.Data.AssemblyInfoInputs.cache
+C:\Users\Sergio\Desktop\api_cd\src\Api.Data\obj\Debug\netcoreapp3.1\Api.Data.AssemblyInfo.cs
+C:\Users\Sergio\Desktop\api_cd\src\Api.Data\obj\Debug\netcoreapp3.1\Api.Data.csproj.CopyComplete
+C:\Users\Sergio\Desktop\api_cd\src\Api.Data\obj\Debug\netcoreapp3.1\Api.Data.dll
+C:\Users\Sergio\Desktop\api_cd\src\Api.Data\obj\Debug\netcoreapp3.1\Api.Data.pdb
+C:\Users\Sergio\Desktop\api_cd\src\Api.Data\obj\Debug\netcoreapp3.1\Api.Data.genruntimeconfig.cache

@@ -1,0 +1,9 @@
+C:\Users\Sergio\Desktop\api_cd\src\Api.Model\bin\Debug\netcoreapp3.1\Api.Model.deps.json
+C:\Users\Sergio\Desktop\api_cd\src\Api.Model\bin\Debug\netcoreapp3.1\Api.Model.dll
+C:\Users\Sergio\Desktop\api_cd\src\Api.Model\bin\Debug\netcoreapp3.1\Api.Model.pdb
+C:\Users\Sergio\Desktop\api_cd\src\Api.Model\obj\Debug\netcoreapp3.1\Api.Model.csprojAssemblyReference.cache
+C:\Users\Sergio\Desktop\api_cd\src\Api.Model\obj\Debug\netcoreapp3.1\Api.Model.csproj.CoreCompileInputs.cache
+C:\Users\Sergio\Desktop\api_cd\src\Api.Model\obj\Debug\netcoreapp3.1\Api.Model.AssemblyInfoInputs.cache
+C:\Users\Sergio\Desktop\api_cd\src\Api.Model\obj\Debug\netcoreapp3.1\Api.Model.AssemblyInfo.cs
+C:\Users\Sergio\Desktop\api_cd\src\Api.Model\obj\Debug\netcoreapp3.1\Api.Model.dll
+C:\Users\Sergio\Desktop\api_cd\src\Api.Model\obj\Debug\netcoreapp3.1\Api.Model.pdb

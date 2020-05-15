@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Api.Application</name>
+    </assembly>
+    <members>
+        <member name="M:Api.Application.Controllers.Login.LoginUser(System.String,System.String)">
+            <summary>
+            Autentica um utilizador
+            </summary>
+            <param name="username">Username do utilizador</param>
+            <param name="password">Password do utilizador</param>
+            <returns>Retorna um utilizador ou NotFound()</returns>
+        </member>
+        <member name="M:Api.Application.Controllers.User.NewUser(System.String,System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            Novo utilizador
+            </summary>
+            <param name="name">nome</param>
+            <param name="username">username</param>
+            <param name="password">password</param>
+            <param name="email">email</param>
+            <param name="imagePath">caminho para a imagem do utilizador</param>
+            <param name="folderPath">caminho para o ftp do utilizador</param>
+            <returns>Retorna o novo utilizador</returns>
+        </member>
+    </members>
+</doc>
