@@ -26,18 +26,22 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-    
+
+    <!-- My own JS -->
+    <script src="js/default.js"></script>    
 </head>
-
 <body>
-    <!-- NAVBAR -->
-    <div id="navbar"><?php include 'navbar-login.php' ?></div>
+                <!-- NAVBAR -->
+                <div id="navbar"><?php include 'navbar-login.php' ?></div>
 
-    <!-- CONTENT -->
-    <div id="content"><?php include 'default.php' ?></div>
-
-    <!-- FOOTER -->
-    <?php include 'footer.php' ?>
+    <div class="container" style="margin-top: 15px">
+            <!-- CONTENT -->
+            <div id="content" class="row"></div>
+            <div class="footer">
+                <!-- FOOTER -->
+                <?php include 'footer.php' ?>
+            </div>
+    </div>
 </body>
 
 </html>

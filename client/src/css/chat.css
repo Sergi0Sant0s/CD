@@ -1,0 +1,75 @@
+/*
+*
+* ==========================================
+* FOR DEMO PURPOSES
+* ==========================================
+*
+*/
+
+.chat-container{
+  padding: 10px;
+}
+
+.chat-container .row{
+  padding-top: 20px;
+}
+ 
+
+  ::-webkit-scrollbar {
+    width: 5px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    width: 5px;
+    background: #ffffff;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    width: 1em;
+    background-color: rgb(47, 76, 104);
+    outline: 1px solid white;
+    border-radius: 1rem;
+  }
+
+  
+  .text-small {
+    font-size: 0.9rem;
+  }
+  
+  .messages-box,
+  .chat-box {
+    height: 70vh;
+    overflow-y: auto;
+  }
+
+  .media{
+    width: 75% !important;
+  }
+
+  .media-body .font-weight-bold{
+    margin-bottom: 15px;
+  }
+  
+  .rounded-lg {
+    border-radius: 0.5rem;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  @media only screen and (max-width:768){
+    .rounded-lg .col-12{
+        margin-bottom:10px;
+        border-bottom: 1px solid #f5f5f5;
+    }
+    .messages-box{
+      height: 150px !important;
+    }
+    
+  }
+  
+  
+  input::placeholder {
+    font-size: 0.9rem;
+    color: #999;
+  }
+  

@@ -12,12 +12,21 @@ $(document).ready(function () {
     //Hide Alert
     $("#danger-alert").hide();
 
+    //Check if exists token
+    if (localStorage.getItem("token") !== null)
+        Valid();
+    else {
+        //load container
+        container.load('./default.php');
+        localStorage.clear();
+    }
+
     login.on('click', function () {
         var $this = $(this)
         target = $this.data('target');
 
         if (target == "login" && username.val() != "" && password.val() != "") {
-            const link = "http://lesi.ddnsfree.com:9090/login?username=" + username.val() + "&password=" + password.val();
+            const link = uri + "/login?username=" + username.val() + "&password=" + password.val();
             const data =
             {
                 username: username.val(),
@@ -69,4 +78,39 @@ $(document).ready(function () {
         }
         return false;
     });
+
+    function Valid() {
+        const link = uri + "/validtoken";
+
+        $.ajax({
+            url: link,
+            headers: { 'Authorization': localStorage.getItem('token') },
+            crossDomain: true,
+            type: "POST",
+            success: function (result) {
+                if (result == true) {
+                    mobileMenu.collapse('hide');
+                    //New Navbar
+                    navbar.load('./navbar.php');
+                    container.load('./chat.php');
+                    //Charge Chats
+                    //ChargeChats();
+                }
+                else {
+                    //load container
+                    container.load('./default.php');
+                    localStorage.clear();
+                }
+            },
+            error: function (xhr, status, error) {
+                //load container
+                container.load('./default.php');
+                localStorage.clear();
+            }
+        });
+    }
+});
+
+$(document).ready(function () {
+
 });

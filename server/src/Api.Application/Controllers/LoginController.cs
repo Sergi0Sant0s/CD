@@ -2,10 +2,13 @@
 using System.Net;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Api.Core.Token;
 using Api.Model.Entities;
 using Api.Model.IServices.Users;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Net.Http.Headers;
 
 namespace Api.Application.Controllers
 {
@@ -63,6 +66,30 @@ namespace Api.Application.Controllers
             {
                 // 500 Internal error - O server encontrou um erro com o qual não consegue lidar
                 return StatusCode((int)HttpStatusCode.InternalServerError, ex.Message);
+            }
+        }
+
+        [Authorize("Bearer")]
+        [HttpPost]
+        [Route("validtoken")]
+        [EnableCors]
+        public async Task<bool> ValidToken()
+        {
+            if (!ModelState.IsValid)
+                return false; // 400 bad request - solicitação invalida
+
+            try
+            {
+                //verificar token do client
+                if (!Request.Headers.ContainsKey(HeaderNames.Authorization) || !TokenMng.ValidateToken(Request.Headers[HeaderNames.Authorization]))
+                    return false;
+                else
+                    return true;
+            }
+            catch (Exception)
+            {
+                // 500 Internal error - O server encontrou um erro com o qual não consegue lidar
+                return false;
             }
         }
     }
