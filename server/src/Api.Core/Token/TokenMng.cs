@@ -6,10 +6,10 @@ namespace Api.Core.Token
 {
     public class TokenMng
     {
-        public static bool ValidateToken(string token)
+        public static bool ValidateToken(string token, out object info)
         {
             var aux = token.Replace("Bearer ", "");
-            return TokenManager.ValidateToken(aux);
+            return TokenManager.ValidateToken(aux, out info);
         }
 
         public static bool RemoveToken(string token)

@@ -27,10 +27,11 @@ namespace Api.Application.Controllers
         [HttpGet]
         [Route("newchat")]
         [EnableCors]
-        public async Task<ActionResult> NewChat(string name)
+        public async Task<ActionResult> NewChat(string name, string description)
         {
             //verificar token do client
-            if (!Request.Headers.ContainsKey(HeaderNames.Authorization) || !TokenMng.ValidateToken(Request.Headers[HeaderNames.Authorization]))
+            object tokenValidate;
+            if (!Request.Headers.ContainsKey(HeaderNames.Authorization) || !TokenMng.ValidateToken(Request.Headers[HeaderNames.Authorization], out tokenValidate))
                 return Unauthorized();
 
             if (!ModelState.IsValid)
@@ -38,7 +39,7 @@ namespace Api.Application.Controllers
 
             try
             {
-                var result = await _chat.NewChat(name);
+                var result = await _chat.NewChat(name, description);
                 if (result == null)
                     return NotFound();
                 else
@@ -57,10 +58,11 @@ namespace Api.Application.Controllers
         [HttpPost]
         [Route("updatechat")]
         [EnableCors]
-        public async Task<ActionResult> UpdateChat(int id, string name)
+        public async Task<ActionResult> UpdateChat(int id, string name, string description)
         {
             //verificar token do client
-            if (!Request.Headers.ContainsKey(HeaderNames.Authorization) || !TokenMng.ValidateToken(Request.Headers[HeaderNames.Authorization]))
+            object tokenValidate;
+            if (!Request.Headers.ContainsKey(HeaderNames.Authorization) || !TokenMng.ValidateToken(Request.Headers[HeaderNames.Authorization], out tokenValidate))
                 return Unauthorized();
 
             if (!ModelState.IsValid)
@@ -68,7 +70,7 @@ namespace Api.Application.Controllers
 
             try
             {
-                var result = await _chat.UpdateName(id, name);
+                var result = await _chat.UpdateName(id, name, description);
                 if (result == null)
                     return NotFound();
                 else
@@ -91,7 +93,8 @@ namespace Api.Application.Controllers
         public async Task<ActionResult> GetAllChats()
         {
             //verificar token do client
-            if (!Request.Headers.ContainsKey(HeaderNames.Authorization) || !TokenMng.ValidateToken(Request.Headers[HeaderNames.Authorization]))
+            object tokenValidate;
+            if (!Request.Headers.ContainsKey(HeaderNames.Authorization) || !TokenMng.ValidateToken(Request.Headers[HeaderNames.Authorization], out tokenValidate))
                 return Unauthorized();
 
             if (!ModelState.IsValid)
@@ -100,6 +103,32 @@ namespace Api.Application.Controllers
             try
             {
                 return Ok(await _chat.GetAllChats());
+            }
+            catch (Exception ex)
+            {
+                // 500 Internal error - O server encontrou um erro com o qual não consegue lidar
+                return StatusCode((int)HttpStatusCode.InternalServerError, ex.Message);
+            }
+
+        }
+
+        [Authorize("Bearer")]
+        [HttpPost]
+        [Route("getallmessages")]
+        [EnableCors]
+        public async Task<ActionResult> GetAllMessages()
+        {
+            //verificar token do client
+            object tokenValidate;
+            if (!Request.Headers.ContainsKey(HeaderNames.Authorization) || !TokenMng.ValidateToken(Request.Headers[HeaderNames.Authorization], out tokenValidate))
+                return Unauthorized();
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState); // 400 bad request - solicitação invalida
+
+            try
+            {
+                return Ok(await _chat.GetAllMessages());
             }
             catch (Exception ex)
             {

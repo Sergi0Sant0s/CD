@@ -38,7 +38,8 @@ namespace Api.Application.Sockets
                             try
                             {
                                 var values = JsonConvert.DeserializeObject<Dictionary<string, string>>(Encoding.UTF8.GetString(buffer, 0, result.Count));
-                                if (values != null && values.ContainsKey("token") && TokenMng.ValidateToken(values["token"]))
+                                object tokenValidate;
+                                if (values != null && values.ContainsKey("token") && TokenMng.ValidateToken(values["token"], out tokenValidate))
                                 {
                                     var username = TokenMng.UsernameToken(values["token"]);
 

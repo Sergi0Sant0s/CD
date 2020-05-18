@@ -21,6 +21,9 @@ namespace Api.Data.Mapping
 
             builder.Property(p => p.CreateAt)
                 .IsRequired();
+
+            builder.Property(p => p.Description)
+                .IsRequired();
         }
     }
 }

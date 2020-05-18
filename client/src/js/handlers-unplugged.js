@@ -40,6 +40,8 @@ $(document).ready(function () {
                 type: "POST",
                 success: function (result) {
                     if (result.hasOwnProperty("authentication") && result.authentication == true) {
+                        user = result.username;
+                        name = result.name;
                         //Close modal
                         modal.modal('toggle');
                         mobileMenu.collapse('hide');
@@ -88,7 +90,10 @@ $(document).ready(function () {
             crossDomain: true,
             type: "POST",
             success: function (result) {
-                if (result == true) {
+                debugger;
+                if (result.authenticate == true) {
+                    user = result.user;
+                    name = result.name;
                     mobileMenu.collapse('hide');
                     //New Navbar
                     navbar.load('./navbar.php');

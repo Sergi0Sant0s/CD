@@ -1,33 +1,98 @@
 $(document).ready(function () {
-    newChat('https://res.cloudinary.com/mhmd/image/upload/v1564960395/avatar_usae7z.svg', 'Sergio Santos', 'Funcionou');
-    newMessageSender(0, 'https://res.cloudinary.com/mhmd/image/upload/v1564960395/avatar_usae7z.svg', 'Sérgio Santos', 'Funcionou', "12:00 PM | Aug 13");
-    newMessageSender(0, 'https://res.cloudinary.com/mhmd/image/upload/v1564960395/avatar_usae7z.svg', 'Joao Silva', 'Ok', "23:00 PM | Aug 13");
-    newMessageSender(0, 'https://res.cloudinary.com/mhmd/image/upload/v1564960395/avatar_usae7z.svg', 'Helder Costa', 'Funcionou', "12:00 PM | Aug 13");
-    newMessageSender(0, 'https://res.cloudinary.com/mhmd/image/upload/v1564960395/avatar_usae7z.svg', 'Fernando Santos', 'Funcionou', "12:00 PM | Aug 13");
-    newMessageSender(0, 'https://res.cloudinary.com/mhmd/image/upload/v1564960395/avatar_usae7z.svg', 'Antonio Santos', 'Funciona mesmo', "12:00 PM | Aug 13");
-    newMessageReceiver(0, "é a minha mensagem", "13:00 PM | Aug 13");
-    newMessageReceiver(0, "continua a ser a minha mensagem", "23:00 PM | Aug 13");
+    /* newChat('https://res.cloudinary.com/mhmd/image/upload/v1564960395/avatar_usae7z.svg', 'Sergio Santos', 'Funcionou adas dsasdadasdasdsadasdd');
+    */
 
-    function newChat(image, name, description) {
+    var link = uri + "/getallmessages";
+    var obj = [];
+    GetChats();
+
+
+    function GetChats() {
+        $.ajax({
+            url: link,
+            headers: { 'Authorization': localStorage.getItem('token') },
+            crossDomain: true,
+            type: "POST",
+            success: function (result) {
+                obj = result;
+
+                if (result.length > 0)
+                    InsertChats();
+            },
+            error: function (xhr, status, error) {
+            }
+        });
+    }
+
+    function InsertChats() {
+        var max = obj.length;
+
+        for (let i = 0; i < max; i++) {
+            if (i == 0) {
+                newChat(1, obj[i].id, obj[i].name, obj[i].description);
+                let lengthMessages = obj[i].messages.length;
+                for (let m = 0; m < lengthMessages; m++) {
+                    if (obj[i].messages[m].username !== user)
+                        newMessageSender("", obj[i].messages[m].name, obj[i].messages[m].message, obj[i].messages[m].date);
+                    else
+                        newMessageReceiver(obj[i].messages[m].message, obj[i].messages[m].date);
+                }
+            }
+            else
+                newChat(0, obj[i].id, obj[i].name, obj[i].description);
+        }
+        var objDiv = document.getElementById("messages");
+        objDiv.scrollTop = objDiv.scrollHeight;
+    }
+
+    function RemoveActive() {
+        $('#chats button').removeClass('active');
+        $('#chats button').removeClass('text-white');
+        $('#chats button').addClass('text-muted');
+    }
+
+    function newChat(active, id, name, description) {
 
         //Root element
-        var root = document.createElement("a");
+        var root = document.createElement("button");
         root.classList.add("list-group-item");
         root.classList.add("list-group-item-action");
-        root.classList.add("active");
-        root.classList.add("text-white");
+        root.classList.add("list-group-item-light");
         root.classList.add("rounded-0");
+        root.classList.add("px-5");
+        if (active == 1) {
+            root.classList.add("active");
+            root.classList.add("text-white");
+        }
+        else {
+            root.classList.add("text-muted");
+        }
+        root.addEventListener("click", function () {
+            //Reset Messages;
+            $('#messages').empty();
+            RemoveActive();
+            root.classList.remove("text-muted");
+            root.classList.add("active");
+            root.classList.add("text-white");
+
+            for (let i = 0; i < obj.length; i++) {
+                if (obj[i].id == id) {
+                    for (let m = 0; m < obj[i].messages.length; m++) {
+                        if (obj[i].messages[m].username !== user)
+                            newMessageSender("", obj[i].messages[m].name, obj[i].messages[m].message, obj[i].messages[m].date);
+                        else
+                            newMessageReceiver(obj[i].messages[m].message, obj[i].messages[m].date);
+                    }
+                }
+            }
+            var objDiv = document.getElementById("messages");
+            objDiv.scrollTop = objDiv.scrollHeight;
+        });
+
 
         //First Div Element
         var div1 = document.createElement("div");
         div1.classList.add("media");
-
-        //User image
-        var imageElement = document.createElement("img");
-        imageElement.classList.add("rounded-circle");
-        imageElement.src = image;
-        imageElement.attr = "user";
-        imageElement.style.width = "50px";
 
         //Second div
         var div2 = document.createElement("div");
@@ -55,7 +120,6 @@ $(document).ready(function () {
 
         //Appends
         root.appendChild(div1);
-        div1.appendChild(imageElement);
         div1.appendChild(div2);
         div2.appendChild(div3);
         div2.appendChild(descriptionElement);
@@ -66,7 +130,7 @@ $(document).ready(function () {
 
     }
 
-    function newMessageSender(chat, image, name, message, time) {
+    function newMessageSender(image, name, message, time) {
 
         //First Div
         var root = document.createElement("div");
@@ -127,7 +191,7 @@ $(document).ready(function () {
         document.getElementById("messages").appendChild(root);
     }
 
-    function newMessageReceiver(chat, message, time) {
+    function newMessageReceiver(message, time) {
         //First Div
         var root = document.createElement("div");
         root.classList.add("media");

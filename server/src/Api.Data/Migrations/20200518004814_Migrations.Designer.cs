@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Api.Data.Migrations
 {
     [DbContext(typeof(MyContext))]
-    [Migration("20200512174621_Migrations")]
+    [Migration("20200518004814_Migrations")]
     partial class Migrations
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -32,6 +32,10 @@ namespace Api.Data.Migrations
                         .IsRequired()
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(50)")
@@ -43,6 +47,15 @@ namespace Api.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Chat");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreateAt = new DateTime(2020, 5, 18, 1, 48, 14, 365, DateTimeKind.Local).AddTicks(9287),
+                            Description = "Chat geral",
+                            Name = "Geral"
+                        });
                 });
 
             modelBuilder.Entity("Api.Model.Entities.MessageEntity", b =>
@@ -119,7 +132,7 @@ namespace Api.Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreateAt = new DateTime(2020, 5, 12, 18, 46, 21, 430, DateTimeKind.Local).AddTicks(4352),
+                            CreateAt = new DateTime(2020, 5, 18, 1, 48, 14, 364, DateTimeKind.Local).AddTicks(6572),
                             Email = "admin@admin.com",
                             FolderPath = "default",
                             ImagePath = "default",

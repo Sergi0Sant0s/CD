@@ -19,20 +19,7 @@ namespace Api.Data.Context
             modelBuilder.Entity<ChatEntity>(new ChatMap().Configure); //executar a configuração do Chat
             modelBuilder.Entity<MessageEntity>(new MessageMap().Configure); //executar a configuração do Message
 
-            //Utilizador padrão
-            modelBuilder.Entity<UserEntity>().HasData(
-                new UserEntity
-                {
-                    Id = 1,
-                    Name = "admin",
-                    Username = "admin",
-                    Password = "admin",
-                    Email = "admin@admin.com",
-                    ImagePath = "default",
-                    FolderPath = "default",
-                    CreateAt = DateTime.Now
-                }
-            );
+            CreateDefaultRecords(modelBuilder);
         }
 
         public DbSet<UserEntity> Users { get; set; }
@@ -41,6 +28,34 @@ namespace Api.Data.Context
 
         public DbSet<MessageEntity> Messages { get; set; }
 
+        public void CreateDefaultRecords(ModelBuilder modelBuilder)
+        {
+            //Utilizador padrão
+            modelBuilder.Entity<UserEntity>().HasData(
+                            new UserEntity
+                            {
+                                Id = 1,
+                                Name = "admin",
+                                Username = "admin",
+                                Password = "admin",
+                                Email = "admin@admin.com",
+                                ImagePath = "default",
+                                FolderPath = "default",
+                                CreateAt = DateTime.Now
+                            }
+                        );
+
+            //Chat inicial
+            modelBuilder.Entity<ChatEntity>().HasData(
+                            new ChatEntity
+                            {
+                                Id = 1,
+                                Name = "Geral",
+                                Description = "Chat geral",
+                                CreateAt = DateTime.Now
+                            }
+            );
+        }
 
     }
 }

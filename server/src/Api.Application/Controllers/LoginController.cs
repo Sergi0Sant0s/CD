@@ -73,23 +73,23 @@ namespace Api.Application.Controllers
         [HttpPost]
         [Route("validtoken")]
         [EnableCors]
-        public async Task<bool> ValidToken()
+        public async Task<object> ValidToken()
         {
             if (!ModelState.IsValid)
-                return false; // 400 bad request - solicitação invalida
+                return BadRequest(); // 400 bad request - solicitação invalida
 
             try
             {
                 //verificar token do client
-                if (!Request.Headers.ContainsKey(HeaderNames.Authorization) || !TokenMng.ValidateToken(Request.Headers[HeaderNames.Authorization]))
-                    return false;
-                else
-                    return true;
+                object tokenValidate = new { authenticate = false };
+                if (Request.Headers.ContainsKey(HeaderNames.Authorization))
+                    TokenMng.ValidateToken(Request.Headers[HeaderNames.Authorization], out tokenValidate);
+                return tokenValidate;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 // 500 Internal error - O server encontrou um erro com o qual não consegue lidar
-                return false;
+                return StatusCode((int)HttpStatusCode.InternalServerError, ex.Message);
             }
         }
     }

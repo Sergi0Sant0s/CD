@@ -1,12 +1,9 @@
-<doctype html>
-<html>
-
+<!DOCTYPE html>
+<html lang="pt">
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    
 
     <title>Api - CD</title>
 
@@ -34,14 +31,12 @@
                 <!-- NAVBAR -->
                 <div id="navbar"><?php include 'navbar-login.php' ?></div>
 
-    <div class="container" style="margin-top: 15px">
             <!-- CONTENT -->
-            <div id="content" class="row"></div>
+            <div id="content"></div>
             <div class="footer">
                 <!-- FOOTER -->
                 <?php include 'footer.php' ?>
             </div>
-    </div>
 </body>
 
 </html>

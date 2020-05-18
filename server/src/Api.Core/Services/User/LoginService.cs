@@ -75,7 +75,7 @@ namespace Api.Core.Services.User
 
                     var handler = new JwtSecurityTokenHandler();
                     string token = CreateToken(identity, createDate, expirationDate, handler);
-                    new TokenManager(baseUser.Username, expirationDate, token);
+                    new TokenManager(baseUser.Name, baseUser.Username, expirationDate, token);
                     return SuccessObject(createDate, expirationDate, token, baseUser);
 
                 }

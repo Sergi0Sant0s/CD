@@ -9,12 +9,15 @@ namespace Api.Model.Security
         /* INSTANCE CLASS */
         private string _username;
 
+        private string _name;
+
         private string _token;
 
         private DateTime _expirateDate;
 
-        public TokenManager(string username, DateTime expirateDate, string token)
+        public TokenManager(string name, string username, DateTime expirateDate, string token)
         {
+            _name = name;
             _username = username;
             _expirateDate = expirateDate;
             _token = token;
@@ -34,11 +37,29 @@ namespace Api.Model.Security
             return list.Remove(aux);
         }
 
-        public static bool ValidateToken(string token)
+        public static bool ValidateToken(string token, out object info)
         {
             ValidateAll();
-            var tokenKey = list.FirstOrDefault(a => a.Value._token == token).Key;
-            return tokenKey != null ? true : false;
+            var tokenKey = list.FirstOrDefault(a => a.Value._token == token);
+            if (tokenKey.Key != null)
+            {
+                info = new
+                {
+                    authenticate = true,
+                    name = tokenKey.Value._name,
+                    user = tokenKey.Value._username
+                };
+                return true;
+            }
+
+            else
+            {
+                info = new
+                {
+                    authenticate = false
+                };
+                return false;
+            }
         }
 
         public static string GetUserByToken(string token)

@@ -15,7 +15,8 @@ namespace Api.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CreateAt = table.Column<DateTime>(nullable: false),
                     UpdateAt = table.Column<DateTime>(nullable: true),
-                    Name = table.Column<string>(maxLength: 50, nullable: false)
+                    Name = table.Column<string>(maxLength: 50, nullable: false),
+                    Description = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -59,9 +60,14 @@ namespace Api.Data.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "Chat",
+                columns: new[] { "Id", "CreateAt", "Description", "Name", "UpdateAt" },
+                values: new object[] { 1, new DateTime(2020, 5, 18, 1, 48, 14, 365, DateTimeKind.Local).AddTicks(9287), "Chat geral", "Geral", null });
+
+            migrationBuilder.InsertData(
                 table: "User",
                 columns: new[] { "Id", "CreateAt", "Email", "FolderPath", "ImagePath", "Name", "Password", "UpdateAt", "Username" },
-                values: new object[] { 1, new DateTime(2020, 5, 12, 18, 46, 21, 430, DateTimeKind.Local).AddTicks(4352), "admin@admin.com", "default", "default", "admin", "admin", null, "admin" });
+                values: new object[] { 1, new DateTime(2020, 5, 18, 1, 48, 14, 364, DateTimeKind.Local).AddTicks(6572), "admin@admin.com", "default", "default", "admin", "admin", null, "admin" });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

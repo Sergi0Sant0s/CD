@@ -9,5 +9,7 @@ namespace Api.Model.Entities
             base.CreateAt = DateTime.Now;
         }
         public string Name { get; set; }
+
+        public string Description { get; set; }
     }
 }

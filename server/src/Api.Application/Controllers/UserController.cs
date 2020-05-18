@@ -47,7 +47,8 @@ namespace Api.Application.Controllers
         public async Task<ActionResult> NewUser(string name, string username, string password, string email, string imagePath, string folderPath)
         {
             //verificar token do client
-            if (!Request.Headers.ContainsKey(HeaderNames.Authorization) || !TokenMng.ValidateToken(Request.Headers[HeaderNames.Authorization]))
+            object tokenValidate;
+            if (!Request.Headers.ContainsKey(HeaderNames.Authorization) || !TokenMng.ValidateToken(Request.Headers[HeaderNames.Authorization], out tokenValidate))
                 return Unauthorized();
 
             if (!ModelState.IsValid)
@@ -74,7 +75,8 @@ namespace Api.Application.Controllers
         [EnableCors]
         public async Task<ActionResult> UpdateUser(string name, string email, string imagePath, string folderPath)
         {
-            if (!Request.Headers.ContainsKey(HeaderNames.Authorization) || !TokenMng.ValidateToken(Request.Headers[HeaderNames.Authorization]))
+            object tokenValidate;
+            if (!Request.Headers.ContainsKey(HeaderNames.Authorization) || !TokenMng.ValidateToken(Request.Headers[HeaderNames.Authorization], out tokenValidate))
                 return Unauthorized();
 
             if (!ModelState.IsValid)
@@ -102,7 +104,8 @@ namespace Api.Application.Controllers
         [EnableCors]
         public async Task<ActionResult> DeleteUser(int id)
         {
-            if (!Request.Headers.ContainsKey(HeaderNames.Authorization) || !TokenMng.ValidateToken(Request.Headers[HeaderNames.Authorization]))
+            object tokenValidate;
+            if (!Request.Headers.ContainsKey(HeaderNames.Authorization) || !TokenMng.ValidateToken(Request.Headers[HeaderNames.Authorization], out tokenValidate))
                 return Unauthorized();
 
             if (!ModelState.IsValid)
