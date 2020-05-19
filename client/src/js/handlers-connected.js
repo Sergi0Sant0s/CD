@@ -13,8 +13,9 @@ $(document).ready(function () {
         target = $this.data('target');
         //Load logout
         if (target = "logout") {
-            container.load('./default.php');
-            navbar.load('./navbar-login.php');
+            localStorage.removeItem('token');
+            container.load('pages/default.php');
+            navbar.load('pages/navbar-login.php');
         }
     });
 
@@ -24,7 +25,7 @@ $(document).ready(function () {
         //Load logout
         if (target = "settings") {
             mobileMenu.collapse('hide');
-            container.load('./settings.php');
+            container.load('pages/settings.php');
         }
     });
 
@@ -34,7 +35,7 @@ $(document).ready(function () {
         //Load chat
         if (target = "logout") {
             mobileMenu.collapse('hide');
-            container.load('./chat.php');
+            container.load('pages/chat.php');
         }
     });
 
@@ -44,7 +45,7 @@ $(document).ready(function () {
         //Load ftp
         if (target = "logout") {
             mobileMenu.collapse('hide');
-            container.load('./ftp.php');
+            container.load('pages/ftp.php');
         }
     });
 

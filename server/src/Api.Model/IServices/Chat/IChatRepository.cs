@@ -19,7 +19,7 @@ namespace Api.Model.IServices.Chat
 
         Task<IEnumerable<object>> GetAllMessagesAsync();
 
-        Task<MessageEntity> NewMessageAsync(int idChat, int idUser, string text, DateTime time);
+        Task<MessageEntity> NewMessageAsync(int idChat, string idUser, string text, DateTime time);
 
         Task<IEnumerable<MessageEntity>> GetMessagesByChatAsync(int idChat);
 

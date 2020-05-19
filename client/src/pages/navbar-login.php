@@ -49,5 +49,5 @@
     </nav>
 
 <!--My Own Javascript-->
-<script src="./js/handlers-unplugged.js"></script>
+<script src="js/handlers-unplugged.js"></script>
 

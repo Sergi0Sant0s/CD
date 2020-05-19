@@ -87,6 +87,16 @@ namespace Api.Data.Repository
             }
         }
 
-
+        public Task<UserEntity> GetUserByIdAsync(int id)
+        {
+            try
+            {
+                return _dataset.FirstOrDefaultAsync(p => p.Id.Equals(id));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

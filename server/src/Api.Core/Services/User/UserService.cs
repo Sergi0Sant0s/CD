@@ -26,5 +26,10 @@ namespace Api.Core.Services.User
         {
             return await _user.RemoveUserAsync(id);
         }
+
+        public Task<UserEntity> GetUserById(int id)
+        {
+            return _user.GetUserByIdAsync(id);
+        }
     }
 }

@@ -17,7 +17,8 @@ $(document).ready(function () {
         Valid();
     else {
         //load container
-        container.load('./default.php');
+        debugger;
+        container.load('pages/default.php');
         localStorage.clear();
     }
 
@@ -26,7 +27,7 @@ $(document).ready(function () {
         target = $this.data('target');
 
         if (target == "login" && username.val() != "" && password.val() != "") {
-            const link = uri + "/login?username=" + username.val() + "&password=" + password.val();
+            const link = "http://" + uri + "/login?username=" + username.val() + "&password=" + password.val();
             const data =
             {
                 username: username.val(),
@@ -48,10 +49,8 @@ $(document).ready(function () {
                         //Save Token
                         localStorage.setItem("token", result.token);
                         //New Navbar
-                        navbar.load('./navbar.php');
-                        container.load('./chat.php');
-                        //Charge Chats
-                        //ChargeChats();
+                        navbar.load('pages/navbar.php');
+                        container.load('pages/chat.php');
                     }
                     else {
                         alertMessage.fadeTo(2000, 500).slideUp(500, function () {
@@ -82,7 +81,7 @@ $(document).ready(function () {
     });
 
     function Valid() {
-        const link = uri + "/validtoken";
+        const link = "http://" + uri + "/validtoken";
 
         $.ajax({
             url: link,
@@ -90,26 +89,27 @@ $(document).ready(function () {
             crossDomain: true,
             type: "POST",
             success: function (result) {
-                debugger;
                 if (result.authenticate == true) {
                     user = result.user;
                     name = result.name;
                     mobileMenu.collapse('hide');
                     //New Navbar
-                    navbar.load('./navbar.php');
-                    container.load('./chat.php');
-                    //Charge Chats
-                    //ChargeChats();
+                    navbar.load('pages/navbar.php');
+                    container.load('pages/chat.php');
                 }
                 else {
                     //load container
-                    container.load('./default.php');
+                    debugger;
+                    container.load('pages/default.php');
+                    navbar.load('pages/navbar-login.php');
                     localStorage.clear();
                 }
             },
             error: function (xhr, status, error) {
                 //load container
-                container.load('./default.php');
+                debugger;
+                container.load('pages/default.php');
+                navbar.load('pages/navbar-login.php');
                 localStorage.clear();
             }
         });

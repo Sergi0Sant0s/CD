@@ -26,4 +26,4 @@
     </nav>
 
 <!--My Own Javascript-->
-<script src="./js/handlers-connected.js"></script>
+<script src="js/handlers-connected.js"></script>

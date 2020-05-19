@@ -10,6 +10,8 @@ namespace Api.Model.IServices.Users
 
         Task<UserEntity> UpdateUserAsync(string name, string username, string email, string imagePath, string folderPath);
 
+        Task<UserEntity> GetUserByIdAsync(int id);
+
         Task<bool> RemoveUserAsync(int Id);
     }
 }

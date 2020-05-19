@@ -32,8 +32,22 @@ namespace Api.Application.Sockets
                 _sockets.TryAdd(username, socket);
             else
             {
-                await RemoveSocket(aux.Key);
-                _sockets.TryAdd(username, socket);
+                try
+                {
+                    await RemoveSocket(aux.Key);
+                    _sockets.TryAdd(username, socket);
+                }
+                catch (System.Exception ex)
+                {
+                    if (aux.Value.State == WebSocketState.Open)
+                    {
+                        await socket.CloseAsync(closeStatus: WebSocketCloseStatus.NormalClosure,
+                                        statusDescription: "Fechado pelo gestor de sockets",
+                                        cancellationToken: CancellationToken.None);
+                    }
+                    WebSocket tempSocket;
+                    _sockets.TryRemove(aux.Key, out tempSocket);
+                }
             }
         }
 
@@ -41,19 +55,6 @@ namespace Api.Application.Sockets
         {
             WebSocket socket;
             _sockets.TryRemove(id, out socket);
-
-            if (socket != null)
-                try
-                {
-                    await socket.CloseAsync(closeStatus: WebSocketCloseStatus.NormalClosure,
-                                        statusDescription: "Fechado pelo gestor de sockets",
-                                        cancellationToken: CancellationToken.None);
-                }
-                catch (System.Exception)
-                {
-
-                    throw;
-                }
         }
 
         public bool CheckIfExistsConnection(string username)

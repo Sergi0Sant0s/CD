@@ -112,12 +112,16 @@ namespace Api.Data.Repository
             return await _context.Messages.Where(p => p.IdChat == idChat).ToListAsync();
         }
 
-        public async Task<MessageEntity> NewMessageAsync(int idChat, int idUser, string text, DateTime time)
+        public async Task<MessageEntity> NewMessageAsync(int idChat, string user, string text, DateTime time)
         {
             try
             {
+                var userCheck = await _context.Users.FirstOrDefaultAsync(p => p.Username.ToUpper() == user);
+                if (userCheck == null)
+                    return null;
+
                 var message = await _datasetMessage.SingleOrDefaultAsync(p => p.IdChat == idChat
-                                                              && p.IdUser == idUser
+                                                              && p.IdUser == userCheck.Id
                                                               && p.Text == text
                                                               && p.Time == time);
                 if (message != null)
@@ -126,7 +130,7 @@ namespace Api.Data.Repository
                 var newMessage = new MessageEntity()
                 {
                     IdChat = idChat,
-                    IdUser = idUser,
+                    IdUser = userCheck.Id,
                     Text = text,
                     Time = time
                 };
@@ -156,13 +160,14 @@ namespace Api.Data.Repository
 
                     foreach (var message in messages)
                     {
+                        var user = _context.Users.FirstOrDefault(p => p.Id == message.IdUser);
                         objs.Add(new
                         {
                             chat = item.Id,
-                            username = _context.Users.FirstOrDefault(p => p.Id == message.IdUser).Username,
-                            name = _context.Users.FirstOrDefault(p => p.Id == message.IdUser).Name,
+                            username = user.Username,
+                            name = user.Name,
                             message = message.Text,
-                            date = message.Time
+                            date = message.Time.Value.ToString("dd/MM/yyyy hh:mm")
                         });
                     }
 

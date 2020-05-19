@@ -44,7 +44,7 @@ namespace Api.Core.Services.User
             return await _chat.GetMessagesByChatAsync(idChat);
         }
 
-        public async Task<MessageEntity> NewMessage(int idChat, int idUser, string text, DateTime time)
+        public async Task<MessageEntity> NewMessage(int idChat, string idUser, string text, DateTime time)
         {
             return await _chat.NewMessageAsync(idChat, idUser, text, time);
         }

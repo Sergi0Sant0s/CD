@@ -37,6 +37,7 @@ namespace Api.Application
 
             ConfigureService.ConfigureDependeciesService(services);
             ConfigureRepository.ConfigureDependeciesRepository(services);
+            services.AddScoped<WebSocketHandler, ChatMessageHandler>();
 
             var signingConfigurations = new SigningConfigurations();
             services.AddSingleton(signingConfigurations);

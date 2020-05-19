@@ -1,31 +1,31 @@
 using System;
 using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Net.WebSockets;
-using System.Security.Claims;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Api.Core.Services.User;
-using Api.Core.Token;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
+using Api.Model.IServices.Chat;
+using Api.Model.IServices.Users;
 
 namespace Api.Application.Sockets
 {
     public class ChatMessageHandler : WebSocketHandler
     {
-        public ChatMessageHandler(ConnectionManager webSocketConnectionManager) : base(webSocketConnectionManager) { }
+        IChatService ServiceChat;
+
+        IUserService ServiceUser;
+
+        public ChatMessageHandler(ConnectionManager webSocketConnectionManager, IChatService service, IUserService serviceUser) : base(webSocketConnectionManager)
+        {
+            ServiceChat = service;
+            ServiceUser = serviceUser;
+        }
 
         public override async Task OnConnected(string username, WebSocket socket, Dictionary<string, string> values)
         {
 
             await base.OnConnected(username, socket, values);
             //
-            string json = "{ \"type\": \"200\" , \"message\" : \"" + username + " juntou-se a conversa\"}";
-            await SendMessageToAllAsync(json);
         }
 
         public override async Task ReceiveAsync(string username, WebSocket socket, WebSocketReceiveResult result, Dictionary<string, string> values)
@@ -35,9 +35,14 @@ namespace Api.Application.Sockets
             else
             {
                 DateTime time = DateTime.Parse(values["time"]);
-                string json = jsonBuilder(username, values["chat"], values["message"], time);
-                //
-                await SendMessageToAllAsync(json.ToString());
+                var chat = await ServiceChat.NewMessage(Convert.ToInt32(values["chat"]), username, values["message"], time);
+                var user = await ServiceUser.GetUserById(chat.IdUser);
+                if (chat != null && user != null)
+                {
+                    string json = jsonBuilder(user.Name, username, chat.IdChat, chat.Text, chat.Time);
+                    //
+                    await SendMessageToAllAsync(json.ToString());
+                }
             }
         }
 
@@ -64,28 +69,24 @@ namespace Api.Application.Sockets
         }
 
 
-        public string jsonBuilder(string name, string chat, string message, DateTime time)
+        public string jsonBuilder(string name, string username, int chat, string message, DateTime? time)
         {
             StringBuilder json = new StringBuilder();
             json.Append("{");
             json.Append("\"type\":");
             json.Append("\"" + 200 + "\",");
+            json.Append("\"username\":");
+            json.Append("\"" + username + "\",");
             json.Append("\"name\":");
             json.Append("\"" + name + "\",");
-            json.Append("\"chat\":");
-            json.Append("\"" + chat + "\",");
+            json.Append("\"chat\": ");
+            json.Append(chat + ",");
             json.Append("\"message\":");
             json.Append("\"" + message + "\",");
-            json.Append("\"time\":");
-            json.Append("\"" + time + "\"");
+            json.Append("\"date\":");
+            json.Append("\"" + time.Value.ToString("dd/MM/yyyy hh:mm") + "\"");
             json.Append("}");
-
             return json.ToString();
         }
-
-        /*public override bool CheckIfExistsConnection(string username)
-        {
-            throw new NotImplementedException();
-        }*/
     }
 }

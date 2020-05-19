@@ -76,7 +76,7 @@ button:focus{
 
 .navbar-nav{
     margin: 0 !important;
-    width: 40%;
+    width: 25%;
 }
 
 @media(max-width: 991px){

@@ -1,13 +1,38 @@
 $(document).ready(function () {
-    /* newChat('https://res.cloudinary.com/mhmd/image/upload/v1564960395/avatar_usae7z.svg', 'Sergio Santos', 'Funcionou adas dsasdadasdasdsadasdd');
-    */
-
-    var link = uri + "/getallmessages";
     var obj = [];
+    var chatSelected;
     GetChats();
+    Connect();
+
+
+    $('#form-messages input').on('keypress', function (e) {
+
+        if (e.which == 13) {
+            if ($(this).val() != "" && chatSelected != "" && localStorage.hasOwnProperty("token")) {
+                //
+                var msg = {
+                    type: 1,
+                    token: localStorage.getItem("token"),
+                    chat: chatSelected,
+                    message: $(this).val(),
+                    time: new Date()
+                };
+                //Send to server
+                sendMessage(JSON.stringify(msg));
+            }
+            $(this).val('');
+            return false;
+        }
+    });
+
+    $('#form-messages button').click(function () {
+        $('#form-messages input').trigger($.Event("keypress", { which: 13 }));
+    });
 
 
     function GetChats() {
+        var link = "http://" + uri + "/getallmessages";
+
         $.ajax({
             url: link,
             headers: { 'Authorization': localStorage.getItem('token') },
@@ -32,8 +57,8 @@ $(document).ready(function () {
                 newChat(1, obj[i].id, obj[i].name, obj[i].description);
                 let lengthMessages = obj[i].messages.length;
                 for (let m = 0; m < lengthMessages; m++) {
-                    if (obj[i].messages[m].username !== user)
-                        newMessageSender("", obj[i].messages[m].name, obj[i].messages[m].message, obj[i].messages[m].date);
+                    if (obj[i].messages[m].username != user)
+                        newMessageSender("https://res.cloudinary.com/mhmd/image/upload/v1564960395/avatar_usae7z.svg", obj[i].messages[m].name, obj[i].messages[m].message, obj[i].messages[m].date);
                     else
                         newMessageReceiver(obj[i].messages[m].message, obj[i].messages[m].date);
                 }
@@ -41,6 +66,8 @@ $(document).ready(function () {
             else
                 newChat(0, obj[i].id, obj[i].name, obj[i].description);
         }
+        if (max > 0)
+            chatSelected = obj[0].id;
         var objDiv = document.getElementById("messages");
         objDiv.scrollTop = objDiv.scrollHeight;
     }
@@ -79,12 +106,13 @@ $(document).ready(function () {
                 if (obj[i].id == id) {
                     for (let m = 0; m < obj[i].messages.length; m++) {
                         if (obj[i].messages[m].username !== user)
-                            newMessageSender("", obj[i].messages[m].name, obj[i].messages[m].message, obj[i].messages[m].date);
+                            newMessageSender("https://res.cloudinary.com/mhmd/image/upload/v1564960395/avatar_usae7z.svg", obj[i].messages[m].name, obj[i].messages[m].message, obj[i].messages[m].date);
                         else
                             newMessageReceiver(obj[i].messages[m].message, obj[i].messages[m].date);
                     }
                 }
             }
+            chatSelected = id;
             var objDiv = document.getElementById("messages");
             objDiv.scrollTop = objDiv.scrollHeight;
         });
@@ -131,12 +159,10 @@ $(document).ready(function () {
     }
 
     function newMessageSender(image, name, message, time) {
-
         //First Div
         var root = document.createElement("div");
         root.classList.add("media");
         root.classList.add("w-50");
-        root.classList.add("mb-3");
 
         //User image
         var img = document.createElement("img");
@@ -164,7 +190,7 @@ $(document).ready(function () {
         div3.classList.add("rounded");
         div3.classList.add("py-1");
         div3.classList.add("px-3");
-        div3.classList.add("mb-0");
+        div3.classList.add("mb-1");
         div3.style.border = "1px solid rgb(219, 219, 219)";
 
         //Message
@@ -197,7 +223,6 @@ $(document).ready(function () {
         root.classList.add("media");
         root.classList.add("w-50");
         root.classList.add("ml-auto");
-        root.classList.add("mb-3");
 
         //Second Div
         var div2 = document.createElement("div");
@@ -207,9 +232,9 @@ $(document).ready(function () {
         var div3 = document.createElement("div");
         div3.classList.add("bg-primary");
         div3.classList.add("rounded");
-        div3.classList.add("py-3");
-        div3.classList.add("px-3");
-        div3.classList.add("mb-2");
+        div3.classList.add("py-2");
+        div3.classList.add("px-2");
+        div3.classList.add("mb-1");
 
         //Message
         var messageElement = document.createElement("p");
@@ -231,5 +256,74 @@ $(document).ready(function () {
         div3.appendChild(messageElement);
 
         document.getElementById("messages").appendChild(root);
+    }
+
+    //WebSocket connect
+    function Connect() {
+        var link = "ws://" + uri + "/ws";
+        socket = new WebSocket(link);
+        var msg = {
+            type: 'authenticate',
+            token: localStorage.getItem("token")
+        };
+
+        socket.onopen = function (event) {
+            sendMessage(JSON.stringify(msg));
+        };
+        //
+        socket.onclose = function (event) {
+            var container = $('#content');
+            container.load('pages/default.php');
+            navbar.load('pages/navbar-login.php');
+        };
+        //
+        socket.onmessage = function (event) {
+            var aux = JSON.parse(event.data);
+            if (aux.hasOwnProperty("type")) {
+                if (aux.type == 200
+                    && aux.hasOwnProperty("name")
+                    && aux.hasOwnProperty("username")
+                    && aux.hasOwnProperty("chat")
+                    && aux.hasOwnProperty("message")
+                    && aux.hasOwnProperty("date")) {
+                    //Insert on structure
+                    var max = obj.length;
+
+                    for (let i = 0; i < max; i++) {
+                        if (obj[i].id == aux.chat) {
+
+                            obj[i].messages.push({
+                                chat: aux.chat,
+                                username: aux.username,
+                                name: aux.name,
+                                message: aux.message,
+                                date: aux.date
+                            });
+                            if (chatSelected == aux.chat) {
+                                if (aux.username != user)
+                                    newMessageSender("https://res.cloudinary.com/mhmd/image/upload/v1564960395/avatar_usae7z.svg", aux.name, aux.message, aux.date);
+                                else
+                                    newMessageReceiver(aux.message, aux.date);
+                                //
+                                var objDiv = document.getElementById("messages");
+                                objDiv.scrollTop = objDiv.scrollHeight;
+                            }
+                            break;
+                        }
+                    }
+                }
+
+                else if (aux.type == 200 && aux.hasOwnProperty("message")) {
+                    appendItem(list, aux.message);
+                }
+            }
+        };
+        socket.onerror = function (event) {
+            console.log("error: " + event.data);
+        };
+    }
+
+    function sendMessage(message) {
+        socket.send(message);
     }
 });
