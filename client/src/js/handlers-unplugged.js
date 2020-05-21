@@ -17,7 +17,6 @@ $(document).ready(function () {
         Valid();
     else {
         //load container
-        debugger;
         container.load('pages/default.php');
         localStorage.clear();
     }
@@ -50,7 +49,7 @@ $(document).ready(function () {
                         localStorage.setItem("token", result.token);
                         //New Navbar
                         navbar.load('pages/navbar.php');
-                        container.load('pages/chat.php');
+                        container.load('pages/ftp.php');
                     }
                     else {
                         alertMessage.fadeTo(2000, 500).slideUp(500, function () {
@@ -95,11 +94,10 @@ $(document).ready(function () {
                     mobileMenu.collapse('hide');
                     //New Navbar
                     navbar.load('pages/navbar.php');
-                    container.load('pages/chat.php');
+                    container.load('pages/ftp.php');
                 }
                 else {
                     //load container
-                    debugger;
                     container.load('pages/default.php');
                     navbar.load('pages/navbar-login.php');
                     localStorage.clear();
@@ -107,7 +105,6 @@ $(document).ready(function () {
             },
             error: function (xhr, status, error) {
                 //load container
-                debugger;
                 container.load('pages/default.php');
                 navbar.load('pages/navbar-login.php');
                 localStorage.clear();

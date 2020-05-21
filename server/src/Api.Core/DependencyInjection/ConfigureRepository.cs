@@ -1,6 +1,8 @@
 using Api.Data.Context;
+using Api.Data.Ftp;
 using Api.Data.Repository;
 using Api.Model.IServices.Chat;
+using Api.Model.IServices.Ftp;
 using Api.Model.IServices.Users;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -20,6 +22,7 @@ namespace Api.Core.DependencyInjection
             serviceCollection.AddScoped<IUserRepository, UserRepository>();
             serviceCollection.AddScoped<ILoginRepository, LoginRepository>();
             serviceCollection.AddScoped<IChatRepository, ChatRepository>();
+            serviceCollection.AddScoped<IFtpManagerRepository, FtpManager>();
 
             serviceCollection.AddDbContext<MyContext>(
                 options => options.UseSqlServer(@"Server=localhost\sqlexpress;Database=dbApi;Trusted_Connection=True;")

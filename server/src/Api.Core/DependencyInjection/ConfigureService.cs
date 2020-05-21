@@ -1,5 +1,6 @@
 using Api.Core.Services.User;
 using Api.Model.IServices.Chat;
+using Api.Model.IServices.Ftp;
 using Api.Model.IServices.Users;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -17,6 +18,7 @@ namespace Api.Core.DependencyInjection
             serviceCollection.AddTransient<IUserService, UserService>();
             serviceCollection.AddTransient<ILoginService, LoginService>();
             serviceCollection.AddTransient<IChatService, ChatService>();
+            serviceCollection.AddTransient<IFtpManagerService, FtpService>();
         }
     }
 }

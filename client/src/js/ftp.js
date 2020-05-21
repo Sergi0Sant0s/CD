@@ -1,89 +1,108 @@
-'use strict';
+$(document).ready(function () {
+    GetFolderByPath("\\");
+    var atualPath;
 
-const folders = document.getElementById('folders-container');
-let lastSelected = '';
-
-const changeState = (element) => {
-    element.previousElementSibling.children[0].classList.toggle('triangle-icon');
-    while (element) {
-        element.classList.toggle('show-sub-folder');
-        element = element.nextElementSibling;
-    }
-};
-const highlight = (element) => {
-    element.classList.toggle('active');
-    lastSelected = element.parentNode;
-
-};
-
-const unHighlightAll = () => {
-    let elements = folders.getElementsByTagName('span');
-    elements = Array.prototype.slice.call(elements);
-    elements.forEach((item) => {
-        item.classList.toggle('active', false);
+    $('#folder-new').click(function () {
+        NewFolder('teste1', '\\teste\\teste');
     });
-};
 
-const a = (firstElement, secondElement) => {
-    let flag = false;
-    firstElement.children[0].classList.toggle('active', true);
-    label:
-        while (firstElement !== secondElement) {
-            while (firstElement.querySelector('.show-sub-folder') && !flag) {
-                firstElement = firstElement.querySelector('.show-sub-folder');
-                firstElement.children[0].classList.toggle('active', true);
-                if (firstElement === secondElement) break label;
-            }
-            flag = true;
-            if (firstElement.nextElementSibling) {
-                firstElement = firstElement.nextElementSibling;
-                flag = false;
-                firstElement.children[0].classList.toggle('active', true);
-            } else {
-                firstElement = firstElement.parentNode;
-            }
-        }
-};
-
-const multiplyHighlight = (secondElement) => {
-    const firstElement = lastSelected;
-    const comparePosition = firstElement.compareDocumentPosition(secondElement);
-    if (comparePosition === 4 || comparePosition === 20) {
-        a(firstElement, secondElement);
-    } else if (comparePosition === 2 || comparePosition === 10) {
-        a(secondElement, firstElement);
-    }
-};
-
-const checkClick = (event) => {
-    const target = event.target.closest('.items-container');
-    if (target) {
-        if (!!target && event.ctrlKey) {
-            highlight(target);
-        } else if (!!target && event.shiftKey && lastSelected !== '') {
-            multiplyHighlight(target.parentElement);
-        } else if (!!target && target.nextElementSibling !== null) {
-            const nextElement = target.nextElementSibling;
-            changeState(nextElement);
-        }
-    } else {
-        unHighlightAll();
-    }
-};
-
-window.onload = () => {
-    let elements = folders.getElementsByTagName('div');
-    elements = Array.prototype.slice.call(elements);
-    elements.forEach((item) => {
-        if (item.querySelector('div')) {
-            const img = document.createElement('img');
-            img.setAttribute('src', 'assets/images/triangle-icon.png');
-            img.className = 'triangle-icon-size';
-            console.log(item.children[0].children[0]);
-            item = item.children[0];
-            item.insertBefore(img, item.children[0]);
-        }
+    $('#folder-rename').click(function () {
+        alert('qwerty 2');
     });
-};
 
-folders.addEventListener('click', checkClick);
+    $('#folder-delete').click(function () {
+        alert('qwerty 3');
+    });
+
+    $('#file-rename').click(function () {
+        alert('qwerty 4');
+    });
+
+    $('#file-delete').click(function () {
+        alert('qwerty 5');
+    });
+
+    $('#file-download').click(function () {
+        alert('qwerty 6');
+    });
+
+    $('#file-upload').click(function () {
+        NewFile('novo ficheiro.jpg', 'este é o path');
+    });
+
+    function NewFolder(name, path) {
+        var li = $('<li></li>');
+        var button = $('<button></button>');
+        button.attr('rel', path);
+        var img = $('<img>').attr('src', 'img/ftp/folder.svg');
+        var span = $('<span></span>').text(name);
+
+        //Appends
+        li.append(button);
+        button.append(img);
+        button.append(span);
+
+        $('#ftp-folders ul').append(li);
+        li.dblclick(function () {
+            GetFolderByPath(path);
+        });
+        button.click(function () {
+            $('#ftp-folders button').removeClass('selected');
+            $(this).addClass('selected');
+        });
+    }
+
+    function NewFile(name, path) {
+        var li = $('<li></li>');
+        var button = $('<button></button>');
+        var img = $('<img>').attr('src', 'img/ftp/file.png');
+        var span = $('<span></span>').text(name);
+
+        //Appends
+        li.append(button);
+        button.append(img);
+        button.append(span);
+
+        $('#ftp-files ul').append(li);
+        button.click(function () {
+            $('#ftp-files button').removeClass('selected');
+            $(this).addClass('selected');
+        });
+    }
+
+    function GetFolderByPath(path) {
+        var link = "http://" + uri + "/getbypath?path=" + path;
+
+        $.ajax({
+            url: link,
+            headers: { 'Authorization': localStorage.getItem('token') },
+            crossDomain: true,
+            type: "POST",
+            success: function (result) {
+                //Reset
+                $('#ftp-folders ul').empty();
+                $('#ftp-files ul').empty();
+
+                var countFolders = result.folders.length;
+                var countFiles = result.files.length;
+
+                //Folders
+                for (let i = 0; i < countFolders; i++) {
+                    NewFolder(result.folders[i].name, result.folders[i].path);
+                }
+                $('#ftp-folders button:eq(1)').first().addClass('selected');
+
+                //Files
+                for (let i = 0; i < countFiles; i++) {
+                    NewFile(result.files[i].name, result.files[i].path);
+                }
+                $('#ftp-files button').first().addClass('selected');
+            },
+            error: function (xhr, status, error) {
+            }
+        });
+    }
+
+
+
+});

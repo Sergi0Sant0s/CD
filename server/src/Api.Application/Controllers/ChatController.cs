@@ -23,6 +23,12 @@ namespace Api.Application.Controllers
             _chat = chat;
         }
 
+        /// <summary>
+        /// Criação de um chat novo
+        /// </summary>
+        /// <param name="name">Nome do chat</param>
+        /// <param name="description">Descrição do chat</param>
+        /// <returns>Retorna um status code do estado da criação do chat.</returns>
         [Authorize("Bearer")]
         [HttpGet]
         [Route("newchat")]
@@ -54,6 +60,14 @@ namespace Api.Application.Controllers
 
         }
 
+
+        /// <summary>
+        /// Update/Atualização de um chat
+        /// </summary>
+        /// <param name="id">id do chat a ser atualizado</param>
+        /// <param name="name">novo nome para o chat</param>
+        /// <param name="description">nova descrição para o chat</param>
+        /// <returns>Retorna um status code do estado da atualização do chat</returns>
         [Authorize("Bearer")]
         [HttpPost]
         [Route("updatechat")]
@@ -85,7 +99,10 @@ namespace Api.Application.Controllers
 
         }
 
-
+        /// <summary>
+        /// Listagem de todos os chats de um client.
+        /// </summary>
+        /// <returns>Retorna um status code do estado da listagem dos chats.</returns>
         [Authorize("Bearer")]
         [HttpPost]
         [Route("getallchats")]
@@ -112,6 +129,11 @@ namespace Api.Application.Controllers
 
         }
 
+
+        /// <summary>
+        /// Listagem de todas as mensagens de um client
+        /// </summary>
+        /// <returns>Retorna um status code do estado da listagem de todas as mensagens.</returns>
         [Authorize("Bearer")]
         [HttpPost]
         [Route("getallmessages")]

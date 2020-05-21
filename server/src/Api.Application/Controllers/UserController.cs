@@ -39,7 +39,7 @@ namespace Api.Application.Controllers
         /// <param name="email">email</param>
         /// <param name="imagePath">caminho para a imagem do utilizador</param>
         /// <param name="folderPath">caminho para o ftp do utilizador</param>
-        /// <returns>Retorna o novo utilizador</returns>
+        /// <returns>Retorna um status code de estado de criação de um novo user.</returns>
         [Authorize("Bearer")]
         [HttpPost]
         [Route("newuser")]
@@ -69,6 +69,14 @@ namespace Api.Application.Controllers
             }
         }
 
+        /// <summary>
+        /// Atualizaçao dos dados de um user
+        /// </summary>
+        /// <param name="name">Novo nome para o user</param>
+        /// <param name="email">Novo email para o user</param>
+        /// <param name="imagePath">Novo caminho de imagens do user</param>
+        /// <param name="folderPath">Novo caminho para as pastas do user</param>
+        /// <returns>Retorna um status code de estado da atualização do user.</returns>
         [Authorize("Bearer")]
         [HttpPost]
         [Route("updateuser")]
@@ -98,6 +106,11 @@ namespace Api.Application.Controllers
             }
         }
 
+        /// <summary>
+        /// Eliminação de um user
+        /// </summary>
+        /// <param name="id">Id do user a eliminar</param>
+        /// <returns>Retorna um status code de estado da eliminação do user.</returns>
         [Authorize("Bearer")]
         [HttpPost]
         [Route("deleteuser")]

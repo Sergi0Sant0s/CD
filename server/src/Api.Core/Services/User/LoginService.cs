@@ -84,7 +84,7 @@ namespace Api.Core.Services.User
                 return new
                 {
                     authentication = false,
-                    message = string.Format("Dados invalidos:\n\tUtilizador/Password com epaços em branco;\n\tUtilizador/Password não preenchidos.")
+                    message = string.Format("Dados invalidos:\n\tUtilizador/Password com espaços em branco;\n\tUtilizador/Password não preenchidos.")
                 };
         }
 

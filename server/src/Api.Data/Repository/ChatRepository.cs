@@ -167,7 +167,7 @@ namespace Api.Data.Repository
                             username = user.Username,
                             name = user.Name,
                             message = message.Text,
-                            date = message.Time.Value.ToString("dd/MM/yyyy hh:mm")
+                            date = message.Time.Value.ToString("dd/MM/yyyy HH:mm")
                         });
                     }
 

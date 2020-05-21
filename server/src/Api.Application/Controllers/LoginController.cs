@@ -50,7 +50,11 @@ namespace Api.Application.Controllers
             }
         }
 
-
+        /// <summary>
+        /// Verificação da existência de um user
+        /// </summary>
+        /// <param name="username">Username do utilizador</param>
+        /// <returns>Retorna um status code de solicitação bem ou má sucedida</returns>
         [HttpPost]
         [Route("UserExists")]
         public async Task<ActionResult> UserExists(string username)
@@ -69,6 +73,10 @@ namespace Api.Application.Controllers
             }
         }
 
+        /// <summary>
+        /// Verificação se um token é valido
+        /// </summary>
+        /// <returns>Retorna um status code de validade do token</returns>
         [Authorize("Bearer")]
         [HttpPost]
         [Route("validtoken")]

@@ -4,6 +4,60 @@
         <name>Api.Application</name>
     </assembly>
     <members>
+        <member name="M:Api.Application.Controllers.Chat.NewChat(System.String,System.String)">
+            <summary>
+            Criação de um chat novo
+            </summary>
+            <param name="name">Nome do chat</param>
+            <param name="description">Descrição do chat</param>
+            <returns>Retorna um status code do estado da criação do chat.</returns>
+        </member>
+        <member name="M:Api.Application.Controllers.Chat.UpdateChat(System.Int32,System.String,System.String)">
+            <summary>
+            Update/Atualização de um chat
+            </summary>
+            <param name="id">id do chat a ser atualizado</param>
+            <param name="name">novo nome para o chat</param>
+            <param name="description">nova descrição para o chat</param>
+            <returns>Retorna um status code do estado da atualização do chat</returns>
+        </member>
+        <member name="M:Api.Application.Controllers.Chat.GetAllChats">
+            <summary>
+            Listagem de todos os chats de um client.
+            </summary>
+            <returns>Retorna um status code do estado da listagem dos chats.</returns>
+        </member>
+        <member name="M:Api.Application.Controllers.Chat.GetAllMessages">
+            <summary>
+            Listagem de todas as mensagens de um client
+            </summary>
+            <returns>Retorna um status code do estado da listagem de todas as mensagens.</returns>
+        </member>
+        <member name="M:Api.Application.Controllers.FtpController.RenameFile(System.String,System.String,System.String)">
+            <summary>
+            Renomear um arquivo
+            </summary>
+            <param name="path">Caminho/Diretorio do arquivo</param>
+            <param name="oldName">Nome atual do arquivo</param>
+            <param name="newName">Novo nme para o arquivo</param>
+            <returns>Retorna se foi possivel alterar o nome do arquivo</returns>
+        </member>
+        <member name="M:Api.Application.Controllers.FtpController.UploadFile(System.String,System.String,Microsoft.AspNetCore.Http.IFormFile)">
+            <summary>
+            Uplaod de um arquivo
+            </summary>
+            <param name="folderPath">Caminho/Diretorio da pasta</param>
+            <param name="newFile">Nome do arquivo</param>
+            <param name="file">Arquivo que vai sofrer o upload</param>
+            <returns>Retorna um status code do estado final do upload</returns>
+        </member>
+        <member name="M:Api.Application.Controllers.FtpController.DeleteFile(System.String)">
+            <summary>
+            Apagar um arquivo
+            </summary>
+            <param name="path">Caminho/Diretorio do aquivo a apagar</param>
+            <returns>Retorna um status code do estado da eliminação do arquivo</returns>
+        </member>
         <member name="M:Api.Application.Controllers.Login.LoginUser(System.String,System.String)">
             <summary>
             Autentica um utilizador
@@ -11,6 +65,19 @@
             <param name="username">Username do utilizador</param>
             <param name="password">Password do utilizador</param>
             <returns>Retorna um utilizador ou NotFound()</returns>
+        </member>
+        <member name="M:Api.Application.Controllers.Login.UserExists(System.String)">
+            <summary>
+            Verificação da existência de um user
+            </summary>
+            <param name="username">Username do utilizador</param>
+            <returns>Retorna um status code de solicitação bem ou má sucedida</returns>
+        </member>
+        <member name="M:Api.Application.Controllers.Login.ValidToken">
+            <summary>
+            Verificação se um token é valido
+            </summary>
+            <returns>Retorna um status code de validade do token</returns>
         </member>
         <member name="M:Api.Application.Controllers.User.NewUser(System.String,System.String,System.String,System.String,System.String,System.String)">
             <summary>
@@ -22,7 +89,24 @@
             <param name="email">email</param>
             <param name="imagePath">caminho para a imagem do utilizador</param>
             <param name="folderPath">caminho para o ftp do utilizador</param>
-            <returns>Retorna o novo utilizador</returns>
+            <returns>Retorna um status code de estado de criação de um novo user.</returns>
+        </member>
+        <member name="M:Api.Application.Controllers.User.UpdateUser(System.String,System.String,System.String,System.String)">
+            <summary>
+            Atualizaçao dos dados de um user
+            </summary>
+            <param name="name">Novo nome para o user</param>
+            <param name="email">Novo email para o user</param>
+            <param name="imagePath">Novo caminho de imagens do user</param>
+            <param name="folderPath">Novo caminho para as pastas do user</param>
+            <returns>Retorna um status code de estado da atualização do user.</returns>
+        </member>
+        <member name="M:Api.Application.Controllers.User.DeleteUser(System.Int32)">
+            <summary>
+            Eliminação de um user
+            </summary>
+            <param name="id">Id do user a eliminar</param>
+            <returns>Retorna um status code de estado da eliminação do user.</returns>
         </member>
     </members>
 </doc>

@@ -1,50 +1,24 @@
 <div class="chat-container">
-    <div class="row rounded-lg overflow-hidden shadow">
-        <!-- Users box-->
-        <div class="col-12 col-xs-12 col-md-5" style="padding: 0;margin-bottom:35px;">
-            <div id="folders-container" onmousedown="return false" onselectstart="return false">
-                <div class="folder">
-                    <span class="items-container">
-                        <img src="img/ftp/folder-icon.png" class="icon">
-                        <span class="folder-title">asterai</span>
-                    </span>
-                    <div class="sub-folder">
-                        <span class="items-container sub-1">
-                            <img src="img/ftp/folder-icon.png" class="icon">
-                            <span class="folder-title">asterai.com</span>
-                        </span>
-                        <div class="sub-folder">
-                            <span class="items-container sub-2">
-                                <img src="img/ftp/folder-icon.png" class="icon">
-                                <span class="folder-title">asterai.com-alpha</span>
-                            </span>
-                            <div class="file">
-                                <span class="items-container sub-3">
-                                    <img src="img/ftp/file-icon.png" class="icon">
-                                    <span class="folder-title">file</span>
-                                </span>
-                            </div>
-                        </div>
-
-                        <div class="sub-folder">
-                            <span class="items-container sub-2">
-                                <img src="img/ftp/folder-icon.png" class="icon" alt="">
-                                <span class="folder-title">asterai.com-beta</span>
-                            </span>
-                        </div>
-
-                    </div>
-                    <div class="sub-folder">
-                        <span class="items-container sub-1">
-                            <img src="img/ftp/folder-icon.png" class="icon">
-                            <span class="folder-title">asterai.com-design</span>
-                        </span>
-                    </div>
-                </div>
-            </div>
+    <div class="row rounded-lg overflow-hidden shadow" style="padding: 20px">
+        <div class="col-12 col-xs-12 col-md-4 ftp-buttons">
+            <button id="folder-new" class="btn btn-primary">Criar</button>
+            <button id="folder-rename" class="btn btn-primary">Renomear</button>
+            <button id="folder-delete" class="btn btn-primary">Eliminar</button>
         </div>
-        <div class="col-12 col-xs-12 col-md-7 px-0" style="border: 1px solid black; padding: 15px;">
-            <p>asfasf</p>
+        <div class="col-12 col-xs-12 col-md-8 ftp-buttons">
+            <button id="file-rename" class="btn btn-primary">Renomear</button>
+            <button id="file-delete" class="btn btn-primary">Eliminar</button>
+            <button id="file-download" class="btn btn-primary">Download</button>
+            <button id="file-upload" class="btn btn-primary">Upload</button>
+        </div>
+        <!-- Users box-->
+        <div id="ftp-folders" class="col-12 col-xs-12 col-md-4"
+            style="padding:0 !important; overflow-y: scroll; border: 3px solid white;">
+            <ul></ul>
+        </div>
+        <div id="ftp-files" class="col-12 col-xs-12 col-md-8 px-0"
+            style="padding:0 !important;overflow-y: auto; border: 3px solid white;">
+            <ul></ul>
         </div>
     </div>
 </div>
