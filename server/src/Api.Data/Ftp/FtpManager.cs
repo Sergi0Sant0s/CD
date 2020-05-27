@@ -14,6 +14,13 @@ namespace Api.Data.Ftp
 
         public string Basepath { get => basepath; }
 
+
+        /// <summary>
+        /// Apagar um arquivo
+        /// </summary>
+        /// <param name="username">Nome do user que quer apagar o arquivo</param>
+        /// <param name="filePath">Caminho/Diretório do arquivo</param>
+        /// <returns>Retorna se o arquivo foi apagado</returns>
         public async Task<bool> DeleteFileAsync(string username, string filePath)
         {
             string fullPath = basepath + username + @"\" + filePath;
@@ -33,6 +40,12 @@ namespace Api.Data.Ftp
             return false;
         }
 
+        /// <summary>
+        /// Apagar uma pasta
+        /// </summary>
+        /// <param name="username">Nome do user que quer apagar a pasta</param>
+        /// <param name="folderPath">Caminho/Diretório da pasta</param>
+        /// <returns>Retorna se a pasta foi apagada</returns>
         public async Task<bool> DeleteFolderAsync(string username, string folderPath)
         {
             string fullPath = basepath + username + @"\" + folderPath;
@@ -52,6 +65,13 @@ namespace Api.Data.Ftp
             return false;
         }
 
+
+        /// <summary>
+        /// Criar uma pasta
+        /// </summary>
+        /// <param name="username">Nome do user que está a criar a pasta</param>
+        /// <param name="path">Caminho/Diretório que queremos para a pasta</param>
+        /// <returns>Retorna se a pasta foi criada</returns>
         public async Task<bool> NewFolderAsync(string username, string path)
         {
             string fullPath = basepath + username + @"\" + path;
@@ -71,6 +91,14 @@ namespace Api.Data.Ftp
             return false;
         }
 
+        /// <summary>
+        /// /// Renomear um arquivo 
+        /// </summary>
+        /// <param name="username">Username criador do arquivo</param>
+        /// <param name="folderPath">Caminho/Diretório do arquivo</param>
+        /// <param name="oldName">Nome do arquivo</param>
+        /// <param name="newName">Novo nome para o arquivo</param>
+        /// <returns>Retorna se foi possivel renomear o arquivo</returns>
         public async Task<bool> RenameFileAsync(string username, string folderPath, string oldName, string newName)
         {
             string oldFullPath = basepath + username + @"\" + folderPath + @"/" + oldName;
@@ -91,6 +119,14 @@ namespace Api.Data.Ftp
             return false;
         }
 
+        /// <summary>
+        /// Renomear uma pasta
+        /// </summary>
+        /// <param name="username">Username criador da pasta</param>
+        /// <param name="folderPath">Caminho/Diretório da pasta</param>
+        /// <param name="oldName">Nome da pasta</param>
+        /// <param name="newName">Novo nome para a pasta</param>
+        /// <returns>Retorna se foi possivel renomear a pasta</returns>
         public async Task<bool> RenameFolderAsync(string username, string folderPath, string oldName, string newName)
         {
             string oldFullPath, newFullPath;
@@ -121,6 +157,15 @@ namespace Api.Data.Ftp
             return false;
         }
 
+
+        /// <summary>
+        /// Upload de arquivos
+        /// </summary>
+        /// <param name="username">Username do criador do upload</param>
+        /// <param name="folderPath">Caminho/Diretório do arquivo</param>
+        /// <param name="name">Nome do arquivo</param>
+        /// <param name="file">Arquivo</param>
+        /// <returns>Retorna se foi possivel fazer o upload</returns>
         public async Task<bool> UploadFileAsync(string username, string folderPath, string name, MemoryStream file)
         {
             string fullPath = basepath + username + @"\" + folderPath + @"/" + name;
@@ -143,6 +188,13 @@ namespace Api.Data.Ftp
             return false;
         }
 
+
+        /// <summary>
+        /// Download de um arquivo
+        /// </summary>
+        /// <param name="username">Username do criador do arquivo</param>
+        /// <param name="folderPath">Caminho/Diretório do arquivo</param>
+        /// <returns>Download do arquivo</returns>
         public async Task<MemoryStream> DownloadFileAsync(string username, string folderPath)
         {
             string fullPath = basepath + username + @"\" + folderPath;
@@ -166,6 +218,12 @@ namespace Api.Data.Ftp
             return null;
         }
 
+        /// <summary>
+        /// Obter um arquivo pelo seu caminho/diretorio
+        /// </summary>
+        /// <param name="username">Username do criador do arquivo</param>
+        /// <param name="path">Caminho/Diretório do arquivo</param>
+        /// <returns>Retorna uma lista com todos os arquivos no diretorio escolhido</returns>
         public async Task<object> GetByPathAsync(string username, string path)
         {
             string fullPath = path == "\\" ? basepath + username + @"\" : basepath + username + path;

@@ -31,7 +31,7 @@ namespace Api.Application.Controllers
         /// <param name="path">Caminho/Diretorio do arquivo</param>
         /// <param name="oldName">Nome atual do arquivo</param>
         /// <param name="newName">Novo nme para o arquivo</param>
-        /// <returns>Retorna se foi possivel alterar o nome do arquivo</returns>
+        /// <returns>Retorna um status code do estado da renomeaçao do arquivo</returns>
         [Authorize("Bearer")]
         [HttpPost]
         [Route("renamefile")]
@@ -50,7 +50,7 @@ namespace Api.Application.Controllers
             {
                 return await _ftp.RenameFile(TokenMng.UsernameToken(Request.Headers[HeaderNames.Authorization]), path, oldName, newName);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 // 500 Internal error - O server encontrou um erro com o qual não consegue lidar
                 return false;
@@ -129,6 +129,11 @@ namespace Api.Application.Controllers
             }
         }
 
+        /// <summary>
+        /// Download de arquivos
+        /// </summary>
+        /// <param name="fullPath">Caminho/Diretorio do aquivo</param>
+        /// <returns>Retorna um status code do estado do download do arquivo</returns>
         [Authorize("Bearer")]
         [HttpPost]
         [Route("downloadfile")]
@@ -169,6 +174,11 @@ namespace Api.Application.Controllers
         /*===========================================     FOLDERS     ============================================*/
         /*========================================================================================================*/
 
+        /// <summary>
+        /// Criar uma nova pasta
+        /// </summary>
+        /// <param name="path">Caminho/Diretorio da pasta</param>
+        /// <returns>Retorna um status code do estado da criação da pasta</returns>
         [Authorize("Bearer")]
         [HttpPost]
         [Route("newfolder")]
@@ -194,6 +204,13 @@ namespace Api.Application.Controllers
             }
         }
 
+        /// <summary>
+        /// Renomear uma pasta
+        /// </summary>
+        /// <param name="folderPath">Caminho/Diretorio da pasta</param>
+        /// <param name="oldName">Nome da pasta</param>
+        /// <param name="newName">Novo nome para a pasta</param>
+        /// <returns>Retorna um status code do estado da renomeação da pasta</returns>
         [Authorize("Bearer")]
         [HttpPost]
         [Route("renamefolder")]
@@ -219,6 +236,11 @@ namespace Api.Application.Controllers
             }
         }
 
+        /// <summary>
+        /// Apagar uma pasta
+        /// </summary>
+        /// <param name="path">Caminho/Diretorio da pasta</param>
+        /// <returns>Retorna um status code do estado da eliminação da pasta</returns>
         [Authorize("Bearer")]
         [HttpDelete]
         [Route("deletefolder")]
@@ -249,6 +271,12 @@ namespace Api.Application.Controllers
         /*===========================================     Generic     ============================================*/
         /*========================================================================================================*/
 
+
+        /// <summary>
+        /// Obter o conteudo de uma pasta
+        /// </summary>
+        /// <param name="path">Caminho/Diretorio da pasta a procurar</param>
+        /// <returns>Retorna um status code do estado da procura do conteudo da pasta</returns>
         [Authorize("Bearer")]
         [HttpPost]
         [Route("getbypath")]
