@@ -277,5 +277,34 @@ namespace Api.Application.Controllers
                 return StatusCode((int)HttpStatusCode.InternalServerError, ex.Message);
             }
         }
+
+        [Authorize("Bearer")]
+        [HttpPost]
+        [Route("getfilesbypath")]
+        [EnableCors]
+        public async Task<object> GetFilesByPath(string path)
+        {
+            //verificar token do client
+            object tokenValidate;
+            if (!Request.Headers.ContainsKey(HeaderNames.Authorization) || !TokenMng.ValidateToken(Request.Headers[HeaderNames.Authorization], out tokenValidate))
+                return Unauthorized();
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState); // 400 bad request - solicitação invalida
+
+            try
+            {
+                var aux = await _ftp.GetFilesByPath(TokenMng.UsernameToken(Request.Headers[HeaderNames.Authorization]), path);
+                if (aux == null)
+                    return NotFound();
+                else
+                    return Ok(aux);
+            }
+            catch (Exception ex)
+            {
+                // 500 Internal error - O server encontrou um erro com o qual não consegue lidar
+                return StatusCode((int)HttpStatusCode.InternalServerError, ex.Message);
+            }
+        }
     }
 }

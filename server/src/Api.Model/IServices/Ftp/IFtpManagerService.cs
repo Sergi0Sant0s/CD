@@ -19,5 +19,7 @@ namespace Api.Model.IServices.Ftp
 
         /* GET ALL */
         Task<object> GetByPath(string username, string path);
+
+        Task<object> GetFilesByPath(string username, string path);
     }
 }

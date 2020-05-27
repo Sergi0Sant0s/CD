@@ -19,6 +19,8 @@ namespace Api.Model.IServices.Ftp
         Task<bool> DeleteFolderAsync(string username, string folderPath);
 
         /* GET ALL */
-        Task<object> GetByPath(string username, string path);
+        Task<object> GetByPathAsync(string username, string path);
+
+        Task<object> GetFilesByPathAsync(string username, string path);
     }
 }

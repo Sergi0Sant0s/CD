@@ -166,7 +166,7 @@ namespace Api.Data.Ftp
             return null;
         }
 
-        public async Task<object> GetByPath(string username, string path)
+        public async Task<object> GetByPathAsync(string username, string path)
         {
             string fullPath = path == "\\" ? basepath + username + @"\" : basepath + username + path;
 
@@ -226,6 +226,44 @@ namespace Api.Data.Ftp
                 }
             }
             return null;
+        }
+
+        public async Task<object> GetFilesByPathAsync(string username, string path)
+        {
+            try
+            {
+                string fullPath = path == "\\" ? basepath + username + @"\" : basepath + username + path;
+
+                List<object> listFiles = new List<object>();
+
+                var allFiles = Directory.GetFiles(fullPath).Select(p => new
+                {
+                    Path = p,
+                    Name = Path.GetFileName(p)
+                }).ToArray();
+
+                foreach (var aux in allFiles)
+                {
+                    string tempName = aux.Name;
+                    string tempPath = path == @"\\" ? aux.Path.Replace(basepath + username + @"\", "") : aux.Path.Replace(basepath + username, "");
+
+                    listFiles.Add(new
+                    {
+                        name = tempName,
+                        path = tempPath
+                    });
+                }
+
+                return new
+                {
+                    files = listFiles
+                };
+            }
+            catch (System.Exception)
+            {
+
+                throw;
+            }
         }
     }
 }

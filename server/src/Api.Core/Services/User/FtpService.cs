@@ -53,7 +53,12 @@ namespace Api.Core.Services.User
 
         public async Task<object> GetByPath(string username, string path)
         {
-            return await _ftp.GetByPath(username, path);
+            return await _ftp.GetByPathAsync(username, path);
+        }
+
+        public async Task<object> GetFilesByPath(string username, string path)
+        {
+            return await _ftp.GetFilesByPathAsync(username, path);
         }
     }
 }
