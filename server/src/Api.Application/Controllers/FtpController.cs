@@ -29,31 +29,30 @@ namespace Api.Application.Controllers
         /// Renomear um arquivo
         /// </summary>
         /// <param name="path">Caminho/Diretorio do arquivo</param>
-        /// <param name="oldName">Nome atual do arquivo</param>
         /// <param name="newName">Novo nme para o arquivo</param>
         /// <returns>Retorna um status code do estado da renomeaçao do arquivo</returns>
         [Authorize("Bearer")]
         [HttpPost]
         [Route("renamefile")]
         [EnableCors]
-        public async Task<bool> RenameFile(string path, string oldName, string newName)
+        public async Task<ActionResult> RenameFile(string path, string newName)
         {
             //verificar token do client
             object tokenValidate;
             if (!Request.Headers.ContainsKey(HeaderNames.Authorization) || !TokenMng.ValidateToken(Request.Headers[HeaderNames.Authorization], out tokenValidate))
-                return false;
+                return Unauthorized();
 
             if (!ModelState.IsValid)
-                return false; // 400 bad request - solicitação invalida
+                return BadRequest(); // 400 bad request - solicitação invalida
 
             try
             {
-                return await _ftp.RenameFile(TokenMng.UsernameToken(Request.Headers[HeaderNames.Authorization]), path, oldName, newName);
+                return Ok(await _ftp.RenameFile(TokenMng.UsernameToken(Request.Headers[HeaderNames.Authorization]), path, newName));
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 // 500 Internal error - O server encontrou um erro com o qual não consegue lidar
-                return false;
+                return StatusCode((int)HttpStatusCode.InternalServerError, ex.Message);
             }
         }
 
@@ -135,25 +134,25 @@ namespace Api.Application.Controllers
         /// <param name="fullPath">Caminho/Diretorio do aquivo</param>
         /// <returns>Retorna um status code do estado do download do arquivo</returns>
         [Authorize("Bearer")]
-        [HttpPost]
+        [HttpGet]
         [Route("downloadfile")]
         [EnableCors]
-        public async Task<HttpResponseMessage> DownloadFile(string fullPath) //ver como aceitar ficheiros
+        public async Task<ActionResult> DownloadFile(string fullPath) //ver como aceitar ficheiros
         {
             //verificar token do client
             object tokenValidate;
             if (!Request.Headers.ContainsKey(HeaderNames.Authorization) || !TokenMng.ValidateToken(Request.Headers[HeaderNames.Authorization], out tokenValidate))
-                return null;
+                return Unauthorized();
 
             if (!ModelState.IsValid)
-                return null; // 400 bad request - solicitação invalida
+                return BadRequest(); // 400 bad request - solicitação invalida
 
             try
             {
-                Stream stream = await _ftp.DownloadFile(TokenMng.UsernameToken(Request.Headers[HeaderNames.Authorization]), fullPath);
+                MemoryStream stream = await _ftp.DownloadFile(TokenMng.UsernameToken(Request.Headers[HeaderNames.Authorization]), fullPath);
 
                 if (stream == null)
-                    return null; // returns a NotFoundResult with Status404NotFound response.
+                    return NotFound(); // Status 404 - NotFound 
 
                 HttpResponseMessage httpResponseMessage = new HttpResponseMessage(HttpStatusCode.OK);
                 httpResponseMessage.Content = new StreamContent(stream);
@@ -161,12 +160,12 @@ namespace Api.Application.Controllers
                 httpResponseMessage.Content.Headers.ContentDisposition.FileName = "video.mp4";
                 httpResponseMessage.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/octet-stream");
 
-                return httpResponseMessage;
+                return Ok(httpResponseMessage);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 // 500 Internal error - O server encontrou um erro com o qual não consegue lidar
-                return null;
+                return StatusCode((int)HttpStatusCode.InternalServerError, ex.Message);
             }
         }
 
@@ -208,14 +207,13 @@ namespace Api.Application.Controllers
         /// Renomear uma pasta
         /// </summary>
         /// <param name="folderPath">Caminho/Diretorio da pasta</param>
-        /// <param name="oldName">Nome da pasta</param>
         /// <param name="newName">Novo nome para a pasta</param>
         /// <returns>Retorna um status code do estado da renomeação da pasta</returns>
         [Authorize("Bearer")]
         [HttpPost]
         [Route("renamefolder")]
         [EnableCors]
-        public async Task<IActionResult> RenameFolder(string folderPath, string oldName, string newName)
+        public async Task<IActionResult> RenameFolder(string folderPath, string newName)
         {
             //verificar token do client
             object tokenValidate;
@@ -227,7 +225,7 @@ namespace Api.Application.Controllers
 
             try
             {
-                return Ok(await _ftp.RenameFolder(TokenMng.UsernameToken(Request.Headers[HeaderNames.Authorization]), folderPath, oldName, newName));
+                return Ok(await _ftp.RenameFolder(TokenMng.UsernameToken(Request.Headers[HeaderNames.Authorization]), folderPath, newName));
             }
             catch (Exception ex)
             {

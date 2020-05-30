@@ -13,9 +13,9 @@ namespace Api.Core.Services.User
         }
 
         /* Files */
-        public async Task<bool> RenameFile(string username, string folderPath, string oldName, string newName)
+        public async Task<bool> RenameFile(string username, string folderPath, string newName)
         {
-            return await _ftp.RenameFileAsync(username, folderPath, oldName, newName);
+            return await _ftp.RenameFileAsync(username, folderPath, newName);
         }
 
         public async Task<bool> UploadFile(string username, string folderPath, string name, MemoryStream file)
@@ -46,9 +46,9 @@ namespace Api.Core.Services.User
             return await _ftp.NewFolderAsync(username, path);
         }
 
-        public async Task<bool> RenameFolder(string username, string folderPath, string oldName, string newName)
+        public async Task<bool> RenameFolder(string username, string folderPath, string newName)
         {
-            return await _ftp.RenameFolderAsync(username, folderPath, oldName, newName);
+            return await _ftp.RenameFolderAsync(username, folderPath, newName);
         }
 
         public async Task<object> GetByPath(string username, string path)

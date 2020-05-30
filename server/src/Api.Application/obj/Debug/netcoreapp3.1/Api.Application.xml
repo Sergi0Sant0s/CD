@@ -33,14 +33,13 @@
             </summary>
             <returns>Retorna um status code do estado da listagem de todas as mensagens.</returns>
         </member>
-        <member name="M:Api.Application.Controllers.FtpController.RenameFile(System.String,System.String,System.String)">
+        <member name="M:Api.Application.Controllers.FtpController.RenameFile(System.String,System.String)">
             <summary>
             Renomear um arquivo
             </summary>
             <param name="path">Caminho/Diretorio do arquivo</param>
-            <param name="oldName">Nome atual do arquivo</param>
             <param name="newName">Novo nme para o arquivo</param>
-            <returns>Retorna se foi possivel alterar o nome do arquivo</returns>
+            <returns>Retorna um status code do estado da renomeaçao do arquivo</returns>
         </member>
         <member name="M:Api.Application.Controllers.FtpController.UploadFile(System.String,System.String,Microsoft.AspNetCore.Http.IFormFile)">
             <summary>
@@ -58,9 +57,45 @@
             <param name="path">Caminho/Diretorio do aquivo a apagar</param>
             <returns>Retorna um status code do estado da eliminação do arquivo</returns>
         </member>
+        <member name="M:Api.Application.Controllers.FtpController.DownloadFile(System.String)">
+            <summary>
+            Download de arquivos
+            </summary>
+            <param name="fullPath">Caminho/Diretorio do aquivo</param>
+            <returns>Retorna um status code do estado do download do arquivo</returns>
+        </member>
+        <member name="M:Api.Application.Controllers.FtpController.NewFolder(System.String)">
+            <summary>
+            Criar uma nova pasta
+            </summary>
+            <param name="path">Caminho/Diretorio da pasta</param>
+            <returns>Retorna um status code do estado da criação da pasta</returns>
+        </member>
+        <member name="M:Api.Application.Controllers.FtpController.RenameFolder(System.String,System.String)">
+            <summary>
+            Renomear uma pasta
+            </summary>
+            <param name="folderPath">Caminho/Diretorio da pasta</param>
+            <param name="newName">Novo nome para a pasta</param>
+            <returns>Retorna um status code do estado da renomeação da pasta</returns>
+        </member>
+        <member name="M:Api.Application.Controllers.FtpController.DeleteFolder(System.String)">
+            <summary>
+            Apagar uma pasta
+            </summary>
+            <param name="path">Caminho/Diretorio da pasta</param>
+            <returns>Retorna um status code do estado da eliminação da pasta</returns>
+        </member>
+        <member name="M:Api.Application.Controllers.FtpController.GetByPath(System.String)">
+            <summary>
+            Obter o conteudo de uma pasta
+            </summary>
+            <param name="path">Caminho/Diretorio da pasta a procurar</param>
+            <returns>Retorna um status code do estado da procura do conteudo da pasta</returns>
+        </member>
         <member name="M:Api.Application.Controllers.Login.LoginUser(System.String,System.String)">
             <summary>
-            Autentica um utilizador
+            Autenticar um utilizador
             </summary>
             <param name="username">Username do utilizador</param>
             <param name="password">Password do utilizador</param>
@@ -107,6 +142,84 @@
             </summary>
             <param name="id">Id do user a eliminar</param>
             <returns>Retorna um status code de estado da eliminação do user.</returns>
+        </member>
+        <member name="M:Api.Application.Sockets.ChatMessageHandler.ReceiveAsync(System.String,System.Net.WebSockets.WebSocket,System.Net.WebSockets.WebSocketReceiveResult,System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+            Receber mensagens
+            </summary>
+            <param name="username">Nome do user</param>
+            <param name="socket"></param>
+            <param name="result"></param>
+            <param name="values"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Api.Application.Sockets.ChatMessageHandler.SendMessageAsync(System.Net.WebSockets.WebSocket,System.String)">
+            <summary>
+            Enviar mensagens
+            </summary>
+            <param name="socket"></param>
+            <param name="message">Mensagem a enviar</param>
+            <returns></returns>
+        </member>
+        <member name="M:Api.Application.Sockets.ChatMessageHandler.SendMessageToAllAsync(System.String)">
+            <summary>
+            Enviar uma mensagem para todos os users
+            </summary>
+            <param name="json">Mensagem a enviar</param>
+            <returns></returns>
+        </member>
+        <member name="M:Api.Application.Sockets.ChatMessageHandler.jsonBuilder(System.String,System.String,System.Int32,System.String,System.Nullable{System.DateTime})">
+            <summary>
+            Construir um json com a mensagem e os dados de envio
+            </summary>
+            <param name="name"></param>
+            <param name="username">Nome do user</param>
+            <param name="chat">Id do chat</param>
+            <param name="message">Mensagem a enviar</param>
+            <param name="time">Data do envio da mensagem</param>
+            <returns>Retorna um json com os dados formatados</returns>
+        </member>
+        <member name="M:Api.Application.Sockets.ConnectionManager.GetSocketById(System.String)">
+            <summary>
+            Obter um socket pelo seu id
+            </summary>
+            <param name="id">Id do socket a obter</param>
+            <returns>Retorna o socket com o id escolhido</returns>
+        </member>
+        <member name="M:Api.Application.Sockets.ConnectionManager.GetAll">
+            <summary>
+            Dicionario com todos os sockets
+            </summary>
+            <returns>Retorna todos os sockets existentes</returns>
+        </member>
+        <member name="M:Api.Application.Sockets.ConnectionManager.GetId(System.Net.WebSockets.WebSocket)">
+            <summary>
+            Obter o id de um socket
+            </summary>
+            <param name="socket">Socket que queremos obter o id</param>
+            <returns>Retorna o Id do socket</returns>
+        </member>
+        <member name="M:Api.Application.Sockets.ConnectionManager.AddSocket(System.String,System.Net.WebSockets.WebSocket)">
+            <summary>
+            Adicionar um socket
+            </summary>
+            <param name="username">Nome do user que está a criar o socket</param>
+            <param name="socket"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Api.Application.Sockets.ConnectionManager.RemoveSocket(System.String)">
+            <summary>
+            Remover um socket
+            </summary>
+            <param name="id">Id do socket a remover</param>
+            <returns></returns>
+        </member>
+        <member name="M:Api.Application.Sockets.ConnectionManager.CheckIfExistsConnection(System.String)">
+            <summary>
+            Verificar se existe conexão
+            </summary>
+            <param name="username">Nome do user que está a verificar se existe conexão</param>
+            <returns>Retorna se existe ou nao conexão</returns>
         </member>
     </members>
 </doc>

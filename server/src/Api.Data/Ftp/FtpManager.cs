@@ -74,7 +74,7 @@ namespace Api.Data.Ftp
         /// <returns>Retorna se a pasta foi criada</returns>
         public async Task<bool> NewFolderAsync(string username, string path)
         {
-            string fullPath = basepath + username + @"\" + path;
+            string fullPath = basepath + username + path;
 
             if (!Directory.Exists(fullPath))
             {
@@ -99,12 +99,18 @@ namespace Api.Data.Ftp
         /// <param name="oldName">Nome do arquivo</param>
         /// <param name="newName">Novo nome para o arquivo</param>
         /// <returns>Retorna se foi possivel renomear o arquivo</returns>
-        public async Task<bool> RenameFileAsync(string username, string folderPath, string oldName, string newName)
+        public async Task<bool> RenameFileAsync(string username, string folderPath, string newName)
         {
-            string oldFullPath = basepath + username + @"\" + folderPath + @"/" + oldName;
-            string newFullPath = basepath + username + @"\" + folderPath + @"/" + newName;
+            string oldFullPath = basepath + username + folderPath;
+            string aux;
+            while (folderPath[folderPath.Length - 1] != '\\')
+            {
+                aux = folderPath.Substring(0, folderPath.Length - 1);
+                folderPath = aux;
+            }
+            string newFullPath = basepath + username + @"\" + folderPath + @"\" + newName;
 
-            if (!File.Exists(oldFullPath))
+            if (File.Exists(oldFullPath))
             {
                 try
                 {
@@ -127,19 +133,17 @@ namespace Api.Data.Ftp
         /// <param name="oldName">Nome da pasta</param>
         /// <param name="newName">Novo nome para a pasta</param>
         /// <returns>Retorna se foi possivel renomear a pasta</returns>
-        public async Task<bool> RenameFolderAsync(string username, string folderPath, string oldName, string newName)
+        public async Task<bool> RenameFolderAsync(string username, string folderPath, string newName)
         {
             string oldFullPath, newFullPath;
-            if (folderPath.Equals(@"\"))
+            string temp = folderPath, aux;
+            while (temp[temp.Length - 1] != '\\')
             {
-                oldFullPath = basepath + username + @"\" + oldName;
-                newFullPath = basepath + username + @"\" + newName;
+                aux = temp.Substring(0, temp.Length - 1);
+                temp = aux;
             }
-            else
-            {
-                oldFullPath = basepath + username + @"\" + folderPath + @"\" + oldName;
-                newFullPath = basepath + username + @"\" + folderPath + @"\" + newName;
-            }
+            oldFullPath = basepath + username + folderPath;
+            newFullPath = basepath + username + temp + newName;
 
 
             if (Directory.Exists(oldFullPath))
