@@ -140,5 +140,25 @@
             </div>
         </div>
     </div>
+    <div id="upload-file-modal" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Eliminar Pasta</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <form class="my-2 my-lg-0">
+                            <input type="file" id="file-upload-button" class="btn btn-primary"></input>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="modal-submit-upload-file" type="button" class="btn btn-primary">Confirmar</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <script src="js/ftp.js"></script>

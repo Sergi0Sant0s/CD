@@ -1,6 +1,5 @@
 $(document).ready(function () {
     GetFolderByPath("\\");
-    UploadFileAsync("\\");
 
     /* FOLDERS */
 
@@ -169,7 +168,7 @@ $(document).ready(function () {
         if ($('#ftp-files button').length != 0) {
             $('#ftp-files button').each(function (index, item) {
                 if ($(item).hasClass("selected")) {
-                    DownloadFileAsync($(item).attr('rel'));
+                    DownloadFileAsync($(item).attr('rel'), $(item).last().text());
                 }
             });
         }
@@ -178,7 +177,19 @@ $(document).ready(function () {
     });
 
     $('#file-upload').click(function () {
+        $('#upload-file-modal').modal('toggle');
+    });
 
+    $('#modal-submit-upload-file').click(function () {
+        $('#ftp-folders button').each(function (index, item) {
+            if ($(item).hasClass("selected")) {
+
+                UploadFileAsync($(item).attr('rel'), $('#file-upload-button'));
+                $('#upload-file-modal').modal('toggle');
+                UploadFiles();
+
+            }
+        });
     });
 
     /*
@@ -189,7 +200,10 @@ $(document).ready(function () {
     function NewFolder(type, name, path) {
         var li = $('<li></li>');
         var button = $('<button></button>');
-        button.attr('rel', path);
+        if (type == 1)
+            button.attr('rel', path + "\\" + name);
+        else
+            button.attr('rel', path);
         if (type == 2)
             button.addClass('subfolder');
         var img;
@@ -207,7 +221,6 @@ $(document).ready(function () {
         $('#ftp-folders ul').append(li);
         if (type != 1) {
             li.dblclick(function () {
-                debugger;
                 GetFolderByPath(path);
             });
         }
@@ -218,7 +231,11 @@ $(document).ready(function () {
             $(this).addClass('selected');
 
             if (type == 1 || type == 2) {
-                var link = "http://" + uri + "/getfilesbypath?path=" + path;
+                var link;
+                if (type == 1)
+                    link = "http://" + uri + "/getfilesbypath?path=" + path + "//" + name;
+                else
+                    link = "http://" + uri + "/getfilesbypath?path=" + path;
 
                 $.ajax({
                     url: link,
@@ -416,68 +433,80 @@ $(document).ready(function () {
         });
     }
 
-    function DownloadFileAsync(path) {
-
-        var link = "http://" + uri + "/downloadfile?fullPath=" + path;
+    function DownloadFileAsync(path, name) {
+        let anchor = document.createElement("a");
+        let link = 'http://' + uri + "/downloadfile?fullPath=" + path + "&&name=" + name;
 
         $.ajax({
             url: link,
+            method: 'GET',
             headers: { 'Authorization': localStorage.getItem('token') },
-            crossDomain: true,
-            type: "POST",
-            contentType: "application/octet-stream",
-            success: function (data) {
-                // `file download`
-                $("a")
-                    .attr({
-                        "href": data.file,
-                        "download": "file.txt"
-                    })
-                    .html($("a").attr("download"))
-                    .get(0).click();
-                console.log(JSON.parse(JSON.stringify(data)));
+            xhrFields: {
+                responseType: 'blob'
             },
-            error: function (xhr, status, error) {
-                alert("Ocorreu um erro a efetuar o download");
+            success: function (data) {
+                var a = document.createElement('a');
+                var url = window.URL.createObjectURL(data);
+                a.href = url;
+                a.download = name;
+                document.body.append(a);
+                a.click();
+                a.remove();
+                window.URL.revokeObjectURL(url);
             }
-        }).then((response) => {
-            const url = window.URL.createObjectURL(new Blob([response.data]));
-            //window.location.href = url;
-            const link = document.createElement('a');
-            link.href = url;
-            link.setAttribute('download', 'video.mp4');
-            document.body.appendChild(link);
-            link.click();
+        });
+    }
+
+    function UploadFileAsync(path, x) {
+        if (x[0].files.length > 0) {
+            var fd = new FormData();
+            fd.append(x[0].files[0].name, x[0].files[0]);
+            let link = 'http://' + uri + "/uploadfile?folderPath=" + path;
+
+
+            $.ajax({
+                url: link,
+                headers: { 'Authorization': localStorage.getItem('token') },
+                data: fd,
+                processData: false,
+                contentType: false,
+                type: 'POST',
+                success: function () {
+                    alert('Uploaded com sucesso');
+                },
+                error: function () {
+                    alert('Ocorreu um erro');
+                }
+            });
+        }
+    }
+
+    function UploadFiles() {
+        $('#ftp-folders button').each(function (index, item) {
+            if ($(item).hasClass("selected")) {
+                var link = "http://" + uri + "/getfilesbypath?path=" + $(item).attr('rel');
+
+                debugger;
+                $.ajax({
+                    url: link,
+                    headers: { 'Authorization': localStorage.getItem('token') },
+                    crossDomain: true,
+                    type: "POST",
+                    success: function (result) {
+                        var count = result.files.length;
+
+                        //Reset Files
+                        $('#ftp-files ul').empty();
+
+                        //Files
+                        for (let i = 0; i < count; i++) {
+                            NewFile(result.files[i].name, result.files[i].path);
+                        }
+                        $('#ftp-files button').first().addClass('selected');
+                    }
+
+                });
+            }
         });
     }
 });
-
-function UploadFileAsync(path) {
-    $("#formulario").submit(function () {
-        var formData = new FormData(this);
-        var link = "http://" + uri + "/uploadfile?fullPath=" + path;
-        debugger;
-
-        $.ajax({
-            url: link,
-            type: 'POST',
-            headers: { 'Authorization': localStorage.getItem('token') },
-            data: formData,
-            success: function (data) {
-                alert(data)
-            },
-            cache: false,
-            contentType: false,
-            processData: false,
-            xhr: function () { // Custom XMLHttpRequest
-                var myXhr = $.ajaxSettings.xhr();
-                if (myXhr.upload) { // Avalia se tem suporte a propriedade upload
-                    myXhr.upload.addEventListener('progress', function () {
-                        /* faz alguma coisa durante o progresso do upload */
-                    }, false);
-                }
-                return myXhr;
-            }
-        });
-    });
-}

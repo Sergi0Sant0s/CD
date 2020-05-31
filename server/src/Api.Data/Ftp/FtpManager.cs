@@ -172,15 +172,18 @@ namespace Api.Data.Ftp
         /// <returns>Retorna se foi possivel fazer o upload</returns>
         public async Task<bool> UploadFileAsync(string username, string folderPath, string name, MemoryStream file)
         {
-            string fullPath = basepath + username + @"\" + folderPath + @"/" + name;
+            string filePath = basepath + username + folderPath + "\\" + name;
 
-            if (!File.Exists(fullPath))
+            if (!File.Exists(filePath))
             {
                 try
                 {
-                    using (var stream = System.IO.File.Create(fullPath))
+                    file.Seek(0, SeekOrigin.Begin);
+
+                    using (FileStream fs = new FileStream(filePath, FileMode.OpenOrCreate))
                     {
-                        await file.CopyToAsync(stream);
+                        file.CopyTo(fs);
+                        fs.Flush();
                     }
                     return true;
                 }

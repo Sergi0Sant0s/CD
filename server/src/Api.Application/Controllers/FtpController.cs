@@ -57,48 +57,6 @@ namespace Api.Application.Controllers
         }
 
         /// <summary>
-        /// Uplaod de um arquivo
-        /// </summary>
-        /// <param name="folderPath">Caminho/Diretorio da pasta</param>
-        /// <param name="newFile">Nome do arquivo</param>
-        /// <param name="file">Arquivo que vai sofrer o upload</param>
-        /// <returns>Retorna um status code do estado final do upload</returns>
-        [Authorize("Bearer")]
-        [HttpPost]
-        [Route("uploadfile")]
-        [EnableCors]
-        public async Task<IActionResult> UploadFile(string folderPath, string newFile, IFormFile file) //ver como aceitar ficheiros
-        {
-            //verificar token do client
-            object tokenValidate;
-            if (!Request.Headers.ContainsKey(HeaderNames.Authorization) || !TokenMng.ValidateToken(Request.Headers[HeaderNames.Authorization], out tokenValidate))
-                return Unauthorized();
-
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState); // 400 bad request - solicitação invalida
-
-            try
-            {
-                if (file.Length > 0)
-                {
-                    using (var stream = new MemoryStream())
-                    {
-                        await file.CopyToAsync(stream);
-                        Ok(await _ftp.UploadFile(TokenMng.UsernameToken(Request.Headers[HeaderNames.Authorization]), folderPath, newFile, stream));
-                    }
-                    return BadRequest();
-                }
-                return BadRequest();
-            }
-            catch (System.Exception ex)
-            {
-                // 500 Internal error - O server encontrou um erro com o qual não consegue lidar
-                return StatusCode((int)HttpStatusCode.InternalServerError, ex.Message);
-            }
-
-        }
-
-        /// <summary>
         /// Apagar um arquivo
         /// </summary>
         /// <param name="path">Caminho/Diretorio do aquivo a apagar</param>
@@ -137,11 +95,12 @@ namespace Api.Application.Controllers
         [HttpGet]
         [Route("downloadfile")]
         [EnableCors]
-        public async Task<ActionResult> DownloadFile(string fullPath) //ver como aceitar ficheiros
+        public async Task<ActionResult> DownloadFile(string fullPath, string name) //ver como aceitar ficheiros
         {
             //verificar token do client
             object tokenValidate;
-            if (!Request.Headers.ContainsKey(HeaderNames.Authorization) || !TokenMng.ValidateToken(Request.Headers[HeaderNames.Authorization], out tokenValidate))
+            if (!Request.Headers.ContainsKey(HeaderNames.Authorization)
+            || !TokenMng.ValidateToken(Request.Headers[HeaderNames.Authorization], out tokenValidate))
                 return Unauthorized();
 
             if (!ModelState.IsValid)
@@ -149,24 +108,60 @@ namespace Api.Application.Controllers
 
             try
             {
-                MemoryStream stream = await _ftp.DownloadFile(TokenMng.UsernameToken(Request.Headers[HeaderNames.Authorization]), fullPath);
+                MemoryStream memStream = await _ftp.DownloadFile(TokenMng.UsernameToken(Request.Headers[HeaderNames.Authorization]), fullPath);
 
-                if (stream == null)
+                if (memStream == null)
                     return NotFound(); // Status 404 - NotFound 
 
-                HttpResponseMessage httpResponseMessage = new HttpResponseMessage(HttpStatusCode.OK);
-                httpResponseMessage.Content = new StreamContent(stream);
-                httpResponseMessage.Content.Headers.ContentDisposition = new System.Net.Http.Headers.ContentDispositionHeaderValue("attachment");
-                httpResponseMessage.Content.Headers.ContentDisposition.FileName = "video.mp4";
-                httpResponseMessage.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/octet-stream");
-
-                return Ok(httpResponseMessage);
+                memStream.Position = 0;
+                return File(memStream, "application/octet-stream", name); // returns a FileStreamResult
             }
             catch (Exception ex)
             {
                 // 500 Internal error - O server encontrou um erro com o qual não consegue lidar
                 return StatusCode((int)HttpStatusCode.InternalServerError, ex.Message);
             }
+        }
+
+        /// <summary>
+        /// Uplaod de um arquivo
+        /// </summary>
+        /// <param name="folderPath">Caminho/Diretorio da pasta</param>
+        /// <returns>Retorna um status code do estado final do upload</returns>
+        [Authorize("Bearer")]
+        [HttpPost]
+        [Route("uploadfile")]
+        [EnableCors]
+        public async Task<IActionResult> UploadFile(string folderPath) //ver como aceitar ficheiros
+        {
+            //verificar token do client
+            object tokenValidate;
+            if (!Request.Headers.ContainsKey(HeaderNames.Authorization) || !TokenMng.ValidateToken(Request.Headers[HeaderNames.Authorization], out tokenValidate))
+                return Unauthorized();
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState); // 400 bad request - solicitação invalida
+
+            try
+            {
+                var file = Request.Form.Files;
+                var name = file[0].Name;
+                if (file.Count == 1)
+                {
+                    using (var stream = new MemoryStream())
+                    {
+                        await file[0].CopyToAsync(stream);
+                        return Ok(await _ftp.UploadFile(TokenMng.UsernameToken(Request.Headers[HeaderNames.Authorization]), folderPath, name, stream));
+                    }
+                }
+                return BadRequest();
+            }
+            catch (System.Exception ex)
+            {
+                // 500 Internal error - O server encontrou um erro com o qual não consegue lidar
+                return StatusCode((int)HttpStatusCode.InternalServerError, ex.Message);
+            }
+
         }
 
         /*========================================================================================================*/

@@ -41,15 +41,6 @@
             <param name="newName">Novo nme para o arquivo</param>
             <returns>Retorna um status code do estado da renomeaçao do arquivo</returns>
         </member>
-        <member name="M:Api.Application.Controllers.FtpController.UploadFile(System.String,System.String,Microsoft.AspNetCore.Http.IFormFile)">
-            <summary>
-            Uplaod de um arquivo
-            </summary>
-            <param name="folderPath">Caminho/Diretorio da pasta</param>
-            <param name="newFile">Nome do arquivo</param>
-            <param name="file">Arquivo que vai sofrer o upload</param>
-            <returns>Retorna um status code do estado final do upload</returns>
-        </member>
         <member name="M:Api.Application.Controllers.FtpController.DeleteFile(System.String)">
             <summary>
             Apagar um arquivo
@@ -57,12 +48,19 @@
             <param name="path">Caminho/Diretorio do aquivo a apagar</param>
             <returns>Retorna um status code do estado da eliminação do arquivo</returns>
         </member>
-        <member name="M:Api.Application.Controllers.FtpController.DownloadFile(System.String)">
+        <member name="M:Api.Application.Controllers.FtpController.DownloadFile(System.String,System.String)">
             <summary>
             Download de arquivos
             </summary>
             <param name="fullPath">Caminho/Diretorio do aquivo</param>
             <returns>Retorna um status code do estado do download do arquivo</returns>
+        </member>
+        <member name="M:Api.Application.Controllers.FtpController.UploadFile(System.String)">
+            <summary>
+            Uplaod de um arquivo
+            </summary>
+            <param name="folderPath">Caminho/Diretorio da pasta</param>
+            <returns>Retorna um status code do estado final do upload</returns>
         </member>
         <member name="M:Api.Application.Controllers.FtpController.NewFolder(System.String)">
             <summary>

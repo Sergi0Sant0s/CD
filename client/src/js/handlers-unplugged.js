@@ -27,15 +27,9 @@ $(document).ready(function () {
 
         if (target == "login" && username.val() != "" && password.val() != "") {
             const link = "http://" + uri + "/login?username=" + username.val() + "&password=" + password.val();
-            const data =
-            {
-                username: username.val(),
-                password: password.val()
-            }
 
             $.ajax({
                 url: link,
-                data: data,
                 crossDomain: true,
                 type: "POST",
                 success: function (result) {
