@@ -69,7 +69,7 @@ namespace Api.Application.Controllers
         /// <param name="description">nova descrição para o chat</param>
         /// <returns>Retorna um status code do estado da atualização do chat</returns>
         [Authorize("Bearer")]
-        [HttpPost]
+        [HttpPut]
         [Route("updatechat")]
         [EnableCors]
         public async Task<ActionResult> UpdateChat(int id, string name, string description)

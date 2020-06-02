@@ -4,7 +4,7 @@ $(document).ready(function () {
     GetChats();
     Connect();
 
-
+    //Pressionar botão enter do input de nova mensagem
     $('#form-messages input').on('keypress', function (e) {
 
         if (e.which == 13) {
@@ -25,11 +25,12 @@ $(document).ready(function () {
         }
     });
 
+    //Pressional o botão de nova mensagem
     $('#form-messages button').click(function () {
         $('#form-messages input').trigger($.Event("keypress", { which: 13 }));
     });
 
-
+    //Ir buscar a api todos os chats existentes
     function GetChats() {
         var link = "http://" + uri + "/getallmessages";
 
@@ -49,6 +50,7 @@ $(document).ready(function () {
         });
     }
 
+    //Insere chats e mensagens
     function InsertChats() {
         var max = obj.length;
 
@@ -72,12 +74,14 @@ $(document).ready(function () {
         objDiv.scrollTop = objDiv.scrollHeight;
     }
 
+    //Remove active do chat actual
     function RemoveActive() {
         $('#chats button').removeClass('active');
         $('#chats button').removeClass('text-white');
         $('#chats button').addClass('text-muted');
     }
 
+    //é introduzido um novo chat
     function newChat(active, id, name, description) {
 
         //Root element
@@ -158,6 +162,7 @@ $(document).ready(function () {
 
     }
 
+    //insere nova mensagem do utilizador logado
     function newMessageSender(image, name, message, time) {
         //First Div
         var root = document.createElement("div");
@@ -217,6 +222,7 @@ $(document).ready(function () {
         document.getElementById("messages").appendChild(root);
     }
 
+    //insere nova mensagem de outro utilizador
     function newMessageReceiver(message, time) {
         //First Div
         var root = document.createElement("div");
@@ -323,6 +329,7 @@ $(document).ready(function () {
         };
     }
 
+    //envia mensagem pelo socket
     function sendMessage(message) {
         socket.send(message);
     }

@@ -43,7 +43,7 @@ $(document).ready(function () {
                         localStorage.setItem("token", result.token);
                         //New Navbar
                         navbar.load('pages/navbar.php');
-                        container.load('pages/ftp.php');
+                        container.load('pages/chat.php');
                     }
                     else {
                         alertMessage.fadeTo(2000, 500).slideUp(500, function () {
@@ -88,7 +88,7 @@ $(document).ready(function () {
                     mobileMenu.collapse('hide');
                     //New Navbar
                     navbar.load('pages/navbar.php');
-                    container.load('pages/ftp.php');
+                    container.load('pages/chat.php');
                 }
                 else {
                     //load container

@@ -78,7 +78,7 @@ namespace Api.Application.Controllers
         /// <param name="folderPath">Novo caminho para as pastas do user</param>
         /// <returns>Retorna um status code de estado da atualização do user.</returns>
         [Authorize("Bearer")]
-        [HttpPost]
+        [HttpPut]
         [Route("updateuser")]
         [EnableCors]
         public async Task<ActionResult> UpdateUser(string name, string email, string imagePath, string folderPath)
@@ -112,7 +112,7 @@ namespace Api.Application.Controllers
         /// <param name="id">Id do user a eliminar</param>
         /// <returns>Retorna um status code de estado da eliminação do user.</returns>
         [Authorize("Bearer")]
-        [HttpPost]
+        [HttpDelete]
         [Route("deleteuser")]
         [EnableCors]
         public async Task<ActionResult> DeleteUser(int id)

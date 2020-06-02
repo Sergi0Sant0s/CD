@@ -32,7 +32,7 @@ namespace Api.Application.Controllers
         /// <param name="newName">Novo nme para o arquivo</param>
         /// <returns>Retorna um status code do estado da renomeaçao do arquivo</returns>
         [Authorize("Bearer")]
-        [HttpPost]
+        [HttpPut]
         [Route("renamefile")]
         [EnableCors]
         public async Task<ActionResult> RenameFile(string path, string newName)
@@ -205,7 +205,7 @@ namespace Api.Application.Controllers
         /// <param name="newName">Novo nome para a pasta</param>
         /// <returns>Retorna um status code do estado da renomeação da pasta</returns>
         [Authorize("Bearer")]
-        [HttpPost]
+        [HttpPut]
         [Route("renamefolder")]
         [EnableCors]
         public async Task<IActionResult> RenameFolder(string folderPath, string newName)
@@ -299,11 +299,16 @@ namespace Api.Application.Controllers
             }
         }
 
+        /// <summary>
+        /// Obtem ficheiros de uma pasta
+        /// </summary>
+        /// <param name="path">Caminho/Diretorio da pasta a procurar</param>
+        /// <returns>Retorna um status code do estado da procura do conteudo da pasta</returns>
         [Authorize("Bearer")]
         [HttpPost]
         [Route("getfilesbypath")]
         [EnableCors]
-        public async Task<object> GetFilesByPath(string path)
+        public async Task<ActionResult> GetFilesByPath(string path)
         {
             //verificar token do client
             object tokenValidate;

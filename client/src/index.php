@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt">
+
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -17,7 +18,7 @@
     <link rel="stylesheet" href="css/ftp.css">
     <link rel="stylesheet" href="css/footer.css">
     <link rel="stylesheet" href="css/settings.css">
-    
+
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -26,8 +27,11 @@
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
     <!-- My own JS -->
-    <script src="js/default.js"></script>    
+
+
+    <script src="js/default.js"></script>
 </head>
+
 <body>
     <!-- NAVBAR -->
     <div id="navbar"><?php include 'pages/navbar-login.php' ?></div>

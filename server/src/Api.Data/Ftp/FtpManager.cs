@@ -235,6 +235,9 @@ namespace Api.Data.Ftp
         {
             string fullPath = path == "\\" ? basepath + username + @"\" : basepath + username + path;
 
+            if (path == "\\" && !Directory.Exists(fullPath))
+                Directory.CreateDirectory(basepath + username);
+
             if (Directory.Exists(fullPath))
             {
                 try

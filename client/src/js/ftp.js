@@ -3,6 +3,7 @@ $(document).ready(function () {
 
     /* FOLDERS */
 
+    //Botão nova pasta(abrir modal)
     $('#folder-new').click(function () {
         var modal = $('#new-folder-modal');
         $('#modal-newfolder-path').text('Path: ' + $('#map').text());
@@ -10,6 +11,7 @@ $(document).ready(function () {
 
     });
 
+    //Botão nova pasta(fechar modal)
     $('#modal-submit-new-folder').click(function () {
         var newName = $('#modal-new-folder-newname');
         var modal = $('#new-folder-modal');
@@ -23,6 +25,7 @@ $(document).ready(function () {
             alert('O nome não pode ser vazio');
     });
 
+    //Botão renomear pasta(abrir modal)
     $('#folder-rename').click(function () {
         $('#ftp-folders button').each(function (index, item) {
             if ($(item).hasClass("selected")) {
@@ -38,6 +41,7 @@ $(document).ready(function () {
         });
     });
 
+    //Botão renomear pasta(fechar modal)
     $('#modal-submit-rename-folder').click(function () {
         var newName = $('#modal-rename-folder-newname');
         var modal = $('#rename-folder-modal');
@@ -57,6 +61,7 @@ $(document).ready(function () {
             alert('O nome não pode ser vazio');
     });
 
+    //Botão delete pasta(abrir modal confirmacao)
     $('#folder-delete').click(function () {
         $('#ftp-folders button').each(function (index, item) {
             if ($(item).hasClass("selected")) {
@@ -73,6 +78,7 @@ $(document).ready(function () {
         });
     });
 
+    //Botão delete pasta(fechar modal)
     $('#modal-submit-delete-folder').click(function () {
         var modal = $('#delete-folder-modal');
         $('#ftp-folders button').each(function (index, item) {
@@ -86,6 +92,7 @@ $(document).ready(function () {
 
     /* FILES */
 
+    //renomear ficheiro(abrir modal)
     $('#file-rename').click(function () {
         if ($('#ftp-files button').length != 0) {
             $('#ftp-files button').each(function (index, item) {
@@ -106,6 +113,7 @@ $(document).ready(function () {
 
     });
 
+    //renomear ficheiro(fechar modal)
     $('#modal-submit-rename-file').click(function () {
         var newName = $('#modal-rename-file-newname');
         var modal = $('#rename-file-modal');
@@ -133,6 +141,7 @@ $(document).ready(function () {
             alert('O nome não pode ser vazio');
     });
 
+    //eliminar ficheiro(abrir modal)
     $('#file-delete').click(function () {
         if ($('#ftp-files button').length != 0) {
             $('#ftp-files button').each(function (index, item) {
@@ -153,6 +162,7 @@ $(document).ready(function () {
             alert("Não existem ficheiros disponiveis nesta pasta.");
     });
 
+    //eliminar ficheiro(fechar modal)
     $('#modal-submit-delete-file').click(function () {
         var modal = $('#delete-file-modal');
         $('#ftp-files button').each(function (index, item) {
@@ -164,6 +174,7 @@ $(document).ready(function () {
         });
     });
 
+    //efetuar download do ficheiro selecionado
     $('#file-download').click(function () {
         if ($('#ftp-files button').length != 0) {
             $('#ftp-files button').each(function (index, item) {
@@ -176,10 +187,12 @@ $(document).ready(function () {
             alert("Não existem ficheiros disponiveis nesta pasta.");
     });
 
+    //efetuar upload de um ficheiro(abrir modal)
     $('#file-upload').click(function () {
         $('#upload-file-modal').modal('toggle');
     });
 
+    //efetuar upload de um ficheiro(fechar modal)
     $('#modal-submit-upload-file').click(function () {
         $('#ftp-folders button').each(function (index, item) {
             if ($(item).hasClass("selected")) {
@@ -197,6 +210,7 @@ $(document).ready(function () {
     1 - folder
     2 - subfolder
     */
+    //nova pasta
     function NewFolder(type, name, path) {
         var li = $('<li></li>');
         var button = $('<button></button>');
@@ -263,6 +277,7 @@ $(document).ready(function () {
 
     }
 
+    //novo ficheiro
     function NewFile(name, path) {
         var li = $('<li></li>');
         var button = $('<button></button>');
@@ -282,6 +297,7 @@ $(document).ready(function () {
         });
     }
 
+    //vai buscar a pasta do caminho enviado e tras todas as pastas e ficheiro dentro dessa pasta
     function GetFolderByPath(path) {
         var link = "http://" + uri + "/getbypath?path=" + path;
         var savePath = path;
@@ -346,6 +362,7 @@ $(document).ready(function () {
 
 
     /* FOLDERS */
+    //renomear pasta
     function RenameFolderAsync(path, newName) {
         var link = "http://" + uri + "/renamefolder?folderPath=" + path + "&&" + "newName=" + newName;
 
@@ -353,7 +370,7 @@ $(document).ready(function () {
             url: link,
             headers: { 'Authorization': localStorage.getItem('token') },
             crossDomain: true,
-            type: "POST",
+            type: "PUT",
             success: function (result) {
                 GetFolderByPath($('#map').text());
             },
@@ -363,6 +380,7 @@ $(document).ready(function () {
         });
     }
 
+    //nova pasta
     function NewFolderAsync(path, newName) {
         var link = "http://" + uri + "/newfolder?path=" + path + "\\" + newName;
 
@@ -380,6 +398,7 @@ $(document).ready(function () {
         });
     }
 
+    //eliminar pasta
     function DeleteFolderAsync(path) {
         var link = "http://" + uri + "/deletefolder?path=" + path;
 
@@ -398,7 +417,7 @@ $(document).ready(function () {
     }
 
     /* FILES */
-
+    //renomear ficheiro
     function RenameFileAsync(path, newName) {
         var link = "http://" + uri + "/renamefile?path=" + path + "&&" + "newName=" + newName;
 
@@ -406,7 +425,7 @@ $(document).ready(function () {
             url: link,
             headers: { 'Authorization': localStorage.getItem('token') },
             crossDomain: true,
-            type: "POST",
+            type: "PUT",
             success: function (result) {
                 GetFolderByPath($('#map').text());
             },
@@ -415,7 +434,7 @@ $(document).ready(function () {
             }
         });
     }
-
+    //eliminar ficheiro
     function DeleteFileAsync(path) {
         var link = "http://" + uri + "/deletefile?path=" + path;
 
@@ -432,7 +451,7 @@ $(document).ready(function () {
             }
         });
     }
-
+    //download de um ficheiro
     function DownloadFileAsync(path, name) {
         let anchor = document.createElement("a");
         let link = 'http://' + uri + "/downloadfile?fullPath=" + path + "&&name=" + name;
@@ -456,7 +475,7 @@ $(document).ready(function () {
             }
         });
     }
-
+    //upload de um ficheiro
     function UploadFileAsync(path, x) {
         if (x[0].files.length > 0) {
             var fd = new FormData();
@@ -480,7 +499,7 @@ $(document).ready(function () {
             });
         }
     }
-
+    //atualiza lista de ficheiros
     function UploadFiles() {
         $('#ftp-folders button').each(function (index, item) {
             if ($(item).hasClass("selected")) {
