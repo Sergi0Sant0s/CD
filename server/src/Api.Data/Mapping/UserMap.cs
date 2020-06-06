@@ -32,9 +32,6 @@ namespace Api.Data.Mapping
                 .IsRequired()
                 .HasMaxLength(100);
 
-            builder.Property(p => p.FolderPath)
-                .HasMaxLength(100);
-
             builder.Property(p => p.CreateAt)
                 .IsRequired();
         }

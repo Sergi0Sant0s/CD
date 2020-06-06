@@ -4,7 +4,7 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:35473",
+      "applicationUrl": "http://lesi.ddnsfree.com:35473",
       "sslPort": 44390
     }
   },
@@ -20,8 +20,8 @@
     "Api.Application": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "weatherforecast",
-      "applicationUrl": "https://localhost:5001;http://localhost:5000",
+      "launchUrl": "",
+      "applicationUrl": "https://lesi.ddnsfree.com:9090;http://lesi.ddnsfree.com:9090",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }

@@ -40,7 +40,6 @@ namespace Api.Data.Context
                                 Password = "admin",
                                 Email = "admin@admin.com",
                                 ImagePath = "default",
-                                FolderPath = "default",
                                 CreateAt = DateTime.Now
                             }
                         );

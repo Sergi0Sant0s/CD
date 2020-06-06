@@ -91,6 +91,13 @@
             <param name="path">Caminho/Diretorio da pasta a procurar</param>
             <returns>Retorna um status code do estado da procura do conteudo da pasta</returns>
         </member>
+        <member name="M:Api.Application.Controllers.FtpController.GetFilesByPath(System.String)">
+            <summary>
+            Obtem ficheiros de uma pasta
+            </summary>
+            <param name="path">Caminho/Diretorio da pasta a procurar</param>
+            <returns>Retorna um status code do estado da procura do conteudo da pasta</returns>
+        </member>
         <member name="M:Api.Application.Controllers.Login.LoginUser(System.String,System.String)">
             <summary>
             Autenticar um utilizador
@@ -112,7 +119,7 @@
             </summary>
             <returns>Retorna um status code de validade do token</returns>
         </member>
-        <member name="M:Api.Application.Controllers.User.NewUser(System.String,System.String,System.String,System.String,System.String,System.String)">
+        <member name="M:Api.Application.Controllers.User.NewUser(System.String,System.String,System.String,System.String,System.String)">
             <summary>
             Novo utilizador
             </summary>
@@ -121,17 +128,15 @@
             <param name="password">password</param>
             <param name="email">email</param>
             <param name="imagePath">caminho para a imagem do utilizador</param>
-            <param name="folderPath">caminho para o ftp do utilizador</param>
             <returns>Retorna um status code de estado de criação de um novo user.</returns>
         </member>
-        <member name="M:Api.Application.Controllers.User.UpdateUser(System.String,System.String,System.String,System.String)">
+        <member name="M:Api.Application.Controllers.User.UpdateUser(System.String,System.String,System.String)">
             <summary>
             Atualizaçao dos dados de um user
             </summary>
             <param name="name">Novo nome para o user</param>
             <param name="email">Novo email para o user</param>
             <param name="imagePath">Novo caminho de imagens do user</param>
-            <param name="folderPath">Novo caminho para as pastas do user</param>
             <returns>Retorna um status code de estado da atualização do user.</returns>
         </member>
         <member name="M:Api.Application.Controllers.User.DeleteUser(System.Int32)">

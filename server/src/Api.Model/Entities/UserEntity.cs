@@ -17,8 +17,6 @@ namespace Api.Model.Entities
 
         public string Email { get; set; }
 
-        public string FolderPath { get; set; }
-
         public string ImagePath { get; set; }
     }
 }

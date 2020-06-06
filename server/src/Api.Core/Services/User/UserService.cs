@@ -12,14 +12,14 @@ namespace Api.Core.Services.User
             _user = user;
         }
 
-        public async Task<UserEntity> NewUser(string name, string username, string password, string email, string imagePath, string folderPath)
+        public async Task<UserEntity> NewUser(string name, string username, string password, string email, string imagePath)
         {
-            return await _user.NewUserAsync(name, username, password, email, imagePath, folderPath);
+            return await _user.NewUserAsync(name, username, password, email, imagePath);
         }
 
-        public async Task<UserEntity> UpdateUser(string name, string username, string email, string imagePath, string folderPath)
+        public async Task<UserEntity> UpdateUser(string name, string username, string email, string imagePath)
         {
-            return await _user.UpdateUserAsync(name, username, email, imagePath, folderPath);
+            return await _user.UpdateUserAsync(name, username, email, imagePath);
         }
 
         public async Task<bool> RemoveUser(int id)

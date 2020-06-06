@@ -38,13 +38,12 @@ namespace Api.Application.Controllers
         /// <param name="password">password</param>
         /// <param name="email">email</param>
         /// <param name="imagePath">caminho para a imagem do utilizador</param>
-        /// <param name="folderPath">caminho para o ftp do utilizador</param>
         /// <returns>Retorna um status code de estado de criação de um novo user.</returns>
         [Authorize("Bearer")]
         [HttpPost]
         [Route("newuser")]
         [EnableCors]
-        public async Task<ActionResult> NewUser(string name, string username, string password, string email, string imagePath, string folderPath)
+        public async Task<ActionResult> NewUser(string name, string username, string password, string email, string imagePath)
         {
             //verificar token do client
             object tokenValidate;
@@ -56,7 +55,7 @@ namespace Api.Application.Controllers
 
             try
             {
-                var result = await _user.NewUser(name, username, password, email, imagePath, folderPath);
+                var result = await _user.NewUser(name, username, password, email, imagePath);
                 if (result == null)
                     return NotFound();
                 else
@@ -75,13 +74,12 @@ namespace Api.Application.Controllers
         /// <param name="name">Novo nome para o user</param>
         /// <param name="email">Novo email para o user</param>
         /// <param name="imagePath">Novo caminho de imagens do user</param>
-        /// <param name="folderPath">Novo caminho para as pastas do user</param>
         /// <returns>Retorna um status code de estado da atualização do user.</returns>
         [Authorize("Bearer")]
         [HttpPut]
         [Route("updateuser")]
         [EnableCors]
-        public async Task<ActionResult> UpdateUser(string name, string email, string imagePath, string folderPath)
+        public async Task<ActionResult> UpdateUser(string name, string email, string imagePath)
         {
             object tokenValidate;
             if (!Request.Headers.ContainsKey(HeaderNames.Authorization) || !TokenMng.ValidateToken(Request.Headers[HeaderNames.Authorization], out tokenValidate))
@@ -93,7 +91,7 @@ namespace Api.Application.Controllers
             try
             {
                 string username = string.Empty;
-                var result = await _user.UpdateUser(name, username, email, imagePath, folderPath);
+                var result = await _user.UpdateUser(name, username, email, imagePath);
                 if (result == null)
                     return NotFound();
                 else

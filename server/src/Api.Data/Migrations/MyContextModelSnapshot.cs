@@ -50,7 +50,7 @@ namespace Api.Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreateAt = new DateTime(2020, 5, 18, 1, 48, 14, 365, DateTimeKind.Local).AddTicks(9287),
+                            CreateAt = new DateTime(2020, 6, 2, 23, 51, 42, 532, DateTimeKind.Local).AddTicks(9776),
                             Description = "Chat geral",
                             Name = "Geral"
                         });
@@ -97,10 +97,6 @@ namespace Api.Data.Migrations
                         .HasColumnType("nvarchar(50)")
                         .HasMaxLength(50);
 
-                    b.Property<string>("FolderPath")
-                        .HasColumnType("nvarchar(100)")
-                        .HasMaxLength(100);
-
                     b.Property<string>("ImagePath")
                         .IsRequired()
                         .HasColumnType("nvarchar(100)")
@@ -130,9 +126,8 @@ namespace Api.Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreateAt = new DateTime(2020, 5, 18, 1, 48, 14, 364, DateTimeKind.Local).AddTicks(6572),
+                            CreateAt = new DateTime(2020, 6, 2, 23, 51, 42, 531, DateTimeKind.Local).AddTicks(6570),
                             Email = "admin@admin.com",
-                            FolderPath = "default",
                             ImagePath = "default",
                             Name = "admin",
                             Password = "admin",
